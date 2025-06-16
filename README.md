@@ -1,3 +1,10 @@
+## Todo
+
+1. Debug docker issues and make sure shit actually runs locally
+2. Put sound effects at `./public/assets/sfx`
+3. Put spritesheets and environment pngs at `./public/assets/sprites`
+4. Put tilemaps at `./public/assets/tilesets`
+
 [![](https://img.shields.io/badge/mago_1.0.0-passing-green)](https://github.com/gongahkia/mago/releases/tag/1.0.0) 
 
 # `Mago` 🪧
@@ -23,9 +30,3 @@ The name `Mago` is in reference to [Mago](https://yokwe-yokai-of-korea.fandom.co
 <div align="center">
     <img src="./asset/logo/mago.png" width="25%">
 </div>
-
-## Todo
-
-1. Put sound effects at `./public/assets/sfx`
-2. Put spritesheets and environment pngs at `./public/assets/sprites`
-3. Put tilemaps at `./public/assets/tilesets`
