@@ -23,3 +23,9 @@ The name `Mago` is in reference to [Mago](https://yokwe-yokai-of-korea.fandom.co
 <div align="center">
     <img src="./asset/logo/mago.png" width="25%">
 </div>
+
+## Todo
+
+1. Put sound effects at `./public/assets/sfx`
+2. Put spritesheets and environment pngs at `./public/assets/sprites`
+3. Put tilemaps at `./public/assets/tilesets`
