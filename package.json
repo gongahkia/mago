@@ -10,6 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "@mlc-ai/web-llm": "^0.2.79",
-    "ajv": "^8.17.1"
+    "@types/gl-matrix": "^2.4.5",
+    "ajv": "^8.17.1",
+    "gl-matrix": "^3.4.3"
   }
 }
