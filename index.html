@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval';">
   <title>Mago</title>
-  <script src="https://cdn.jsdelivr.net/npm/@webgpu/types/dist/index.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm/dist/web-llm.js"></script>
   <style>
     body {
       margin: 0;
@@ -39,20 +38,26 @@
       <progress id="modelLoadProgress" value="0" max="1"></progress>
     </div>
   </div>
-  <script>
-  const modelConfig = {
-    modelUrl: '/models/phi-3-mini',         
-    wasmUrl: '/models/phi-3-mini/model.wasm',
-    cacheSize: 1024 * 1024 * 512
-  };
-  </script>
-  <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register(
-      '/service-worker/index.js',
-      { scope: './', type: 'module' }
-    );
-  }
+  <script type="module">
+    // Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register(
+        new URL('./src/workers/service.worker.ts', import.meta.url),
+        { 
+          scope: '/',
+          type: 'module' 
+        }
+      ).then(registration => {
+        console.log('ServiceWorker registration successful:', registration);
+      }).catch(err => {
+        console.error('ServiceWorker registration failed:', err);
+      });
+    }
+    window.modelConfig = {
+      modelUrl: '/models/phi-3-mini',
+      wasmUrl: '/models/phi-3-mini/model.wasm',
+      cacheSize: 1024 * 1024 * 512
+    };
   </script>
   <script type="module" src="/src/main.tsx"></script>
 </body>
