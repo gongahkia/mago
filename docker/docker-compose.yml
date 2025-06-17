@@ -1,24 +1,22 @@
-version: '3.8'
-
 services:
   dev:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: docker/Dockerfile.dev  
     volumes:
-      - .:/app
-      - /app/node_modules
+      - .:/app      
+      - /app/node_modules  
     ports:
-      - "3000:3000"
+      - "3000:3000"        
     environment:
       - NODE_ENV=development
-    stdin_open: true
-    tty: true
 
   prod:
     build:
       context: .
+      dockerfile: docker/Dockerfile  
     ports:
-      - "8080:80"
+      - "8080:80"         
     environment:
       - NODE_ENV=production
+      
