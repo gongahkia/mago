@@ -10,7 +10,7 @@
 
 # `Mago` 🪧
 
-...
+Browser [Rougelike](https://en.wikipedia.org/wiki/Roguelike) with [LLM](#stack)-orchestrated randomisation.
 
 ## Stack
 
