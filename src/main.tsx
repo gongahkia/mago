@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { HUD } from './ui/HUD/HUD';
 import { DialogueManager } from './ui/dialogues/DialogueManager';
 import { useGameStore } from './game/state/store';
-import { initWebGLContext } from './rendering/CanvasLayers';
+import { initializeWebGL2 } from './rendering/CanvasLayers';
 import { SpriteBatch } from './rendering/SpriteBatch';
 import { RNG } from './utils/rng';
 import { gridToPixel } from './utils/grid-math';
@@ -32,7 +32,7 @@ function App() {
   // Initialize WebGL context and game systems
   React.useEffect(() => {
     const canvas = document.getElementById('gameCanvas') as HTMLCanvasElement;
-    const gl = initWebGLContext(canvas);
+    const gl = initializeWebGL2(canvas);
     
     if (!gl) {
       console.error('Failed to initialize WebGL2 context');
