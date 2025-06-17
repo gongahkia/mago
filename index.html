@@ -40,19 +40,19 @@
     </div>
   </div>
   <script>
-    const modelConfig = {
-      modelUrl: '%PUBLIC_URL%/models/phi-3-mini',
-      wasmUrl: '%PUBLIC_URL%/models/phi-3-mini/model.wasm',
-      cacheSize: 1024 * 1024 * 512 // 512MB cache
-    };
+  const modelConfig = {
+    modelUrl: '/models/phi-3-mini',         
+    wasmUrl: '/models/phi-3-mini/model.wasm',
+    cacheSize: 1024 * 1024 * 512
+  };
   </script>
   <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register(
-        '%PUBLIC_URL%/service-worker/index.js', 
-        { scope: './', type: 'module' }
-      );
-    }
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register(
+      '/service-worker/index.js',
+      { scope: './', type: 'module' }
+    );
+  }
   </script>
   <script type="module" src="/src/main.tsx"></script>
 </body>

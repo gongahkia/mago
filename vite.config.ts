@@ -8,10 +8,11 @@ export default defineConfig({
     comlink()
   ],
   worker: {
-    plugins: () => [comlink()]
+    plugins: () => [comlink()],
+    format: 'es' 
   },
   server: {
-    host: true, // or '0.0.0.0'
+    host: true, 
     port: 3000,
     strictPort: true,
     watch: {
@@ -20,13 +21,18 @@ export default defineConfig({
     allowedHosts: [
       'localhost',
       '127.0.0.1',
-      // Add your WSL2 or LAN IP if needed, e.g.:
-      // '172.24.0.2'
     ]
   },
   build: {
+    rollupOptions: {
+      input: {
+        main: 'index.html',
+        'ai.worker': './src/workers/ai.worker.ts',
+        'pathfinder.worker': './src/workers/pathfinder.worker.ts'
+      }
+    },
     outDir: 'dist',
     assetsDir: 'assets',
-    sourcemap: true
+    sourcemap: true,
   }
 });
