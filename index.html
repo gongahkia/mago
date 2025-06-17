@@ -39,7 +39,6 @@
     </div>
   </div>
   <script type="module">
-    // Service Worker Registration
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register(
         new URL('./src/workers/service.worker.ts', import.meta.url),
