@@ -44,7 +44,6 @@ function App() {
     setGlContext(gl);
     setSpriteBatch(batch);
     
-    // Handle window resize
     const handleResize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -54,7 +53,6 @@ function App() {
     window.addEventListener('resize', handleResize);
     handleResize();
     
-    // Initial render
     batch.begin();
     batch.drawQuad(0, 0, canvas.width, canvas.height, [0.1, 0.1, 0.1, 1]);
     batch.end();
@@ -67,7 +65,6 @@ function App() {
     };
   }, []);
 
-  // Game loop
   React.useEffect(() => {
     if (!glContext || !spriteBatch) return;
 
@@ -85,7 +82,7 @@ function App() {
       spriteBatch.drawSprite(
         playerPos.px, playerPos.py,
         TILE_SIZE, TILE_SIZE,
-        [1, 1, 1, 1] // Player sprite color
+        [1, 1, 1, 1] 
       );
       
       spriteBatch.end();
@@ -98,7 +95,6 @@ function App() {
     return () => cancelAnimationFrame(animationFrameId);
   }, [glContext, spriteBatch, player.position]);
 
-  // Initialize service workers
   React.useEffect(() => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register(
@@ -112,7 +108,6 @@ function App() {
     }
   }, []);
 
-  // Sample dialogue trigger
   React.useEffect(() => {
     const initialDialogue: DialogueEntry[] = [
       { speaker: 'Mago', message: 'The dungeon awakens...' },
@@ -122,7 +117,6 @@ function App() {
     setCurrentDialogue(initialDialogue);
   }, []);
 
-  // Input handling
   React.useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       const newPos = { ...player.position };
