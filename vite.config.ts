@@ -33,13 +33,14 @@ export default defineConfig({
         main: 'index.html',
         'ai.worker': './src/workers/ai.worker.ts',
         'pathfinder.worker': './src/workers/pathfinder.worker.ts'
-      }
+      },
+      external: ['@webgpu/types'] 
     },
     outDir: 'dist',
     assetsDir: 'assets',
     sourcemap: true,
   },
   optimizeDeps: {
-    include: ['@webgpu/types', '@mlc-ai/web-llm']
+    include: ['@mlc-ai/web-llm']
   }
 });

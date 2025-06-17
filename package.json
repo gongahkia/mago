@@ -11,9 +11,9 @@
   "author": "Gabriel Ong",
   "license": "ISC",
   "dependencies": {
-    "@mlc-ai/web-llm": "^0.2.79",
+    "@mlc-ai/web-llm": "^0.7.3",
     "@types/gl-matrix": "^2.4.5",
-    "@webgpu/types": "^0.1.61",
+    "@webgpu/types": "^0.1.25",
     "ajv": "^8.17.1",
     "gl-matrix": "^3.4.3",
     "immer": "^10.1.1",
