@@ -4,7 +4,10 @@ services:
       context: .
       dockerfile: Dockerfile.dev 
     volumes:
-      - .:/app
+      - ./src:/app/src
+      - ./public:/app/public
+      - ./index.html:/app/index.html
+      - ./vite.config.ts:/app/vite.config.ts
       - /app/node_modules
     ports:
       - "3000:3000"
