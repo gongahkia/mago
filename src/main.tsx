@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { HUD } from './ui/HUD/HUD';
 import { DialogueManager } from './ui/dialogues/DialogueManager';
 import { useGameStore } from './game/state/store';
-import { initializeWebGL2 } from './rendering/CanvasLayers';
+import { initializeWebGL2, CanvasLayers } from './rendering/CanvasLayers';
 import { SpriteBatch } from './rendering/SpriteBatch';
 import { RNG } from './utils/rng';
 import { gridToPixel } from './utils/grid-math';
