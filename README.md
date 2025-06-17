@@ -13,13 +13,29 @@
 
 ## Stack
 
-...
+* *Frontend*:
+* *Backend*:
+* *Docker*:
+* *Testing*:
+* *Model*:
 
 ## Usage
 
-...
+The below instructions are for locally hosting `Mago`.
+
+1. Execute the following to build and start Mago in production or development *(with optional hot reloading)*.
+
+```console
+$ git clone https://github.com/gongahkia/mago && cd mago
+$ docker-compose -f docker/docker-compose.yml up --build prod
+$ docker-compose -f docker/docker-compose.yml up --build dev
+```
 
 ## Architecture
+
+...
+
+## Other notes
 
 ...
 
