@@ -27,8 +27,8 @@ The below instructions are for locally hosting `Mago`.
 
 ```console
 $ git clone https://github.com/gongahkia/mago && cd mago
-$ docker-compose -f docker/docker-compose.yml up --build prod
-$ docker-compose -f docker/docker-compose.yml up --build dev
+$ docker-compose -f docker-compose.yml up --build prod
+$ docker-compose -f docker-compose.yml up --build dev
 ```
 
 ## Architecture

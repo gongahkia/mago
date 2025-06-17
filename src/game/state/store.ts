@@ -1,7 +1,9 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { persist } from 'zustand/middleware';
-import { Entity, Component, System } from '../ecs';
+import { Entity } from '../ecs/Entity';
+import { Component } from '../ecs/Component';
+import { System } from '../ecs/System';
 import { RNG } from '../../utils/rng';
 
 interface ECSState {
