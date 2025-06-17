@@ -1,10 +1,8 @@
-version: '3.8'
-
 services:
   dev:
     build:
-      context: .
-      dockerfile: Dockerfile.dev
+      context: .  # Project root directory
+      dockerfile: Dockerfile.dev  # Dockerfile.dev is now in root
     volumes:
       - .:/app
       - /app/node_modules
@@ -12,12 +10,11 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=development
-    stdin_open: true
-    tty: true
 
   prod:
     build:
-      context: .
+      context: .  # Project root directory
+      dockerfile: Dockerfile  # Dockerfile is now in root
     ports:
       - "8080:80"
     environment:
