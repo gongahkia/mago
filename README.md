@@ -1,6 +1,6 @@
 ## Todo
 
-1. Debug docker issues and make sure shit actually runs locally
+1. Debug docker issues and make sure shit actually runs locally, continue from [this chat](https://www.perplexity.ai/search/i-have-a-project-called-mago-w-Q6.r_XUqQ2qodKKWlqLTtA)
 2. Put sound effects at `./public/assets/sfx`
 3. Put spritesheets and environment pngs at `./public/assets/sprites`
 4. Put tilemaps at `./public/assets/tilesets`
