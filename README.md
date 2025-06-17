@@ -4,6 +4,7 @@
 2. Put sound effects at `./public/assets/sfx`
 3. Put spritesheets and environment pngs at `./public/assets/sprites`
 4. Put tilemaps at `./public/assets/tilesets`
+5. Add .ico file for icon within `index.html`
 
 [![](https://img.shields.io/badge/mago_1.0.0-passing-green)](https://github.com/gongahkia/mago/releases/tag/1.0.0) 
 
