@@ -24,7 +24,7 @@ export default defineConfig({
     ],
     headers: {
       'Service-Worker-Allowed': '/',
-      'Content-Type': 'application/javascript'
+      'Content-Type': 'text/html; charset=utf-8'
     }
   },
   build: {
