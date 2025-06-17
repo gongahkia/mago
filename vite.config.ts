@@ -35,7 +35,10 @@ export default defineConfig({
     sourcemap: true
   },
   optimizeDeps: {
-    include: ['@mlc-ai/web-llm'],
+    include: [
+      '@mlc-ai/web-llm', 
+      'react-dom/client'
+    ],
     exclude: ['@webgpu/types'] 
   }
 });
