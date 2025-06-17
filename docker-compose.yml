@@ -1,8 +1,8 @@
 services:
   dev:
     build:
-      context: .  # Project root directory
-      dockerfile: Dockerfile.dev  # Dockerfile.dev is now in root
+      context: .
+      dockerfile: Dockerfile.dev 
     volumes:
       - .:/app
       - /app/node_modules
@@ -13,8 +13,8 @@ services:
 
   prod:
     build:
-      context: .  # Project root directory
-      dockerfile: Dockerfile  # Dockerfile is now in root
+      context: . 
+      dockerfile: Dockerfile 
     ports:
       - "8080:80"
     environment:
