@@ -14,11 +14,13 @@
 
 ## Stack
 
-* *Frontend*:
-* *Backend*:
-* *Docker*:
-* *Testing*:
-* *Model*:
+* *Frontend*: [React](), [TypeScript](), [Vite]()
+* *Backend*: [Node.js](), [Web Workers]()
+* *Graphics*: [WebGL2](), [HTML Canvas]()
+* *Package*: [Docker]()
+* *Routing*: [Nginx]()
+* *Model*: [WebLLM](), [Phi-3-mini]()
+* *Testing*: [Vitest]()
 
 ## Usage
 
