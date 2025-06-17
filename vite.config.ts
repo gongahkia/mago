@@ -34,5 +34,8 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
     sourcemap: true,
+  },
+  optimizeDeps: {
+    include: ['@webgpu/types', '@mlc-ai/web-llm']
   }
 });
