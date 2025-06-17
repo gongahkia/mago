@@ -22,6 +22,10 @@
 * *Model*: [WebLLM](https://webllm.mlc.ai/), [microsoft/Phi-3-mini-4k-instruct](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct)
 * *Testing*: [Vitest](https://vitest.dev/)
 
+## Screenshots
+
+...
+
 ## Usage
 
 The below instructions are for locally hosting `Mago`.
