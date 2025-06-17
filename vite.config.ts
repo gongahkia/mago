@@ -20,7 +20,7 @@ export default defineConfig({
       usePolling: true
     },
     headers: {
-      'Content-Security-Policy': "script-src 'self' 'unsafe-inline'", 
+      'Content-Security-Policy': "script-src 'self' 'unsafe-inline'",
       'Service-Worker-Allowed': '/'
     },
     hmr: {
