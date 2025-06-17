@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 import { comlink } from 'vite-plugin-comlink';
 
 export default defineConfig({
-  base: './', 
+  base: './',
   plugins: [
     react(),
     comlink()
@@ -13,25 +13,26 @@ export default defineConfig({
     format: 'es'
   },
   server: {
-    host: '0.0.0.0', 
+    host: '0.0.0.0',
     port: 3000,
     strictPort: true,
     watch: {
       usePolling: true
     },
     headers: {
-      'Service-Worker-Allowed': '/',
+      'Content-Security-Policy': "script-src 'self' 'unsafe-inline'", 
+      'Service-Worker-Allowed': '/'
     },
     hmr: {
+      clientPort: 3000, 
       protocol: 'ws',
       host: 'localhost'
-    },
-    middlewareMode: false
+    }
   },
   build: {
     rollupOptions: {
       input: {
-        main: 'index.html',
+        main: 'index.html'
       },
       external: ['@webgpu/types']
     },
@@ -41,9 +42,9 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: [
-      '@mlc-ai/web-llm', 
+      '@mlc-ai/web-llm',
       'react-dom/client'
     ],
-    exclude: ['@webgpu/types'] 
+    exclude: ['@webgpu/types']
   }
 });
