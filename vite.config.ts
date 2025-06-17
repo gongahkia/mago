@@ -21,7 +21,12 @@ export default defineConfig({
     },
     headers: {
       'Service-Worker-Allowed': '/',
-    }
+    },
+    hmr: {
+      protocol: 'ws',
+      host: 'localhost'
+    },
+    middlewareMode: false
   },
   build: {
     rollupOptions: {
