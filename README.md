@@ -14,13 +14,13 @@
 
 ## Stack
 
-* *Frontend*: [React](), [TypeScript](), [Vite]()
-* *Backend*: [Node.js](), [Web Workers]()
-* *Graphics*: [WebGL2](), [HTML Canvas]()
-* *Package*: [Docker]()
-* *Routing*: [Nginx]()
-* *Model*: [WebLLM](), [Phi-3-mini]()
-* *Testing*: [Vitest]()
+* *Frontend*: [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), [Vite](https://vite.dev/)
+* *Backend*: [Node.js](https://nodejs.org/en), [Web Workers API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
+* *Graphics*: [WebGL2](https://get.webgl.org/webgl2/enable.html), [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)
+* *Package*: [Docker](https://www.docker.com/)
+* *Routing*: [Nginx](https://nginx.org/)
+* *Model*: [WebLLM](https://webllm.mlc.ai/), [microsoft/Phi-3-mini-4k-instruct](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct)
+* *Testing*: [Vitest](https://vitest.dev/)
 
 ## Usage
 
