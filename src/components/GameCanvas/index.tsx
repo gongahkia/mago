@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { AsciiRenderer } from './AsciiRenderer';
 import { ColorSystem } from './ColorSystem';
-import { useGameStore } from '../../store/gameState';
+import useGameStore from '../../store/gameState';
 
 export const GameCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);

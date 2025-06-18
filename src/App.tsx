@@ -2,7 +2,7 @@ import { useGameLoop } from './hooks/useGameLoop';
 import { useInputHandler } from './hooks/useInputHandler';
 import { GameCanvas } from './components/GameCanvas';
 
-export const App = () => {
+const App = () => {
   useGameLoop();
   useInputHandler();
 
@@ -17,3 +17,5 @@ export const App = () => {
     </div>
   );
 };
+
+export default App;
