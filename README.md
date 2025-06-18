@@ -33,7 +33,7 @@ The below instructions are for locally hosting `Mago`.
 ```console
 $ git clone https://github.com/gongahkia/mago && cd mago
 $ npm run dev
-$ docker-compose -f docker-compose.yml up --build dev
+$ docker-compose -f docker/docker-compose.yml up --build
 ```
 
 ## Architecture
