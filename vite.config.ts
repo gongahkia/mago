@@ -1,19 +1,15 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import comlink from 'vite-plugin-comlink';
+import { comlink } from 'vite-plugin-comlink'; 
 
 export default defineConfig({
   plugins: [
-    react(), 
-    comlink()
+    react(),
+    comlink() 
   ],
   server: {
-    hmr: {
-      overlay: false
-    },
-    watch: {
-      usePolling: true
-    },
+    hmr: { overlay: false },
+    watch: { usePolling: true },
     proxy: {
       '/Xenova': {
         target: 'https://huggingface.co',
@@ -25,14 +21,15 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
-    sourcemap: 'hidden' 
+    sourcemap: 'hidden'
   },
   resolve: {
-    alias: {
-      '@': '/src'
-    }
+    alias: { '@': '/src' }
   },
   worker: {
-    plugins: [comlink()]
+    plugins: () => [comlink()] 
+  },
+  optimizeDeps: {
+    exclude: ['@xenova/transformers']
   }
 });
