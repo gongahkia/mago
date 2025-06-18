@@ -21,10 +21,10 @@ export const AINotification = () => {
 
   const message = !modelReady
     ? `
-╔══════════════════════════╗
-║   LOADING AI MODEL...    ║
-║   Please wait to play    ║
-╚══════════════════════════╝
+╔═══════════════════════════╗
+║      MAGO IS LOADING      ║
+║      Wait for model       ║
+╚═══════════════════════════╝
 `
     : `
 ╔══════════════════════════╗
