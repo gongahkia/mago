@@ -1,8 +1,10 @@
 ## Todo
 
-1. Add a credits and about page
-2. Add explanation and controls 
-3. See if I can make it similar to https://github.com/munificent/hauberk
+1. Debug why modelLoader.ts runs for every turn that the player takes
+2. Move model initialisation within modelLoader.ts to run only once at the beginning of the client intialisation
+3. Add a credits and about page
+4. Add explanation and controls 
+5. See if I can make it similar to https://github.com/munificent/hauberk
 
 [![](https://img.shields.io/badge/mago_1.0.0-passing-green)](https://github.com/gongahkia/mago/releases/tag/1.0.0) 
 

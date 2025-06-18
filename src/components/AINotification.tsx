@@ -37,8 +37,8 @@ export const AINotification = () => {
         {
 `
 ╔══════════════════════════╗
-║      MAGO AI ACTIVE      ║
-║     Processing Turn      ║
+║     MAGO IS THINKING     ║
+║       Taking Turn        ║
 ╚══════════════════════════╝
 `
  }
