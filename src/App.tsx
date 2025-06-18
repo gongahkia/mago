@@ -2,9 +2,10 @@ import { useGameLoop } from './hooks/useGameLoop';
 import { useInputHandler } from './hooks/useInputHandler';
 import { GameCanvas } from './components/GameCanvas';
 import { AINotification } from './components/AINotification';
-import { useEffect } from 'react';
 import useGameStore from './store/gameState';
-import * as worker from './workers/aiWorker';
+import { useEffect } from 'react';
+import { wrap } from 'comlink';
+import AIWorker from './workers/aiWorker/index.ts?worker'; 
 
 const App = () => {
   useGameLoop();
@@ -13,7 +14,14 @@ const App = () => {
   useEffect(() => {
     (async () => {
       try {
-        await worker.init();
+        const worker = new AIWorker(); 
+        const workerProxy = wrap<import('./workers/aiWorker').AIWorker>(worker); 
+        useEffect(() => {
+          (async () => {
+            await workerProxy.init();
+            useGameStore.getState().setModelReady(true);
+          })();
+        }, []);
         useGameStore.getState().setModelReady(true);
         console.log('[App] AI model loaded successfully');
       } catch (error) {
