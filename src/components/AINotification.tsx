@@ -13,7 +13,7 @@ export const AINotification = () => {
         if (progressRef.current) {
           progressRef.current.style.width = '100%';
         }
-      }, 10);
+      }, 25);
     }
   }, [isAIThinking, modelReady]);
 
