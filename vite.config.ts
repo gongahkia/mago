@@ -1,46 +1,33 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { comlink } from 'vite-plugin-comlink'; 
-import wasm from 'vite-plugin-wasm';
-import topLevelAwait from 'vite-plugin-top-level-await';
+import { comlink } from 'vite-plugin-comlink';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 export default defineConfig({
   plugins: [
     react(),
-    comlink() 
+    comlink(),
+    viteStaticCopy({
+      targets: [
+        {
+          src: 'node_modules/onnxruntime-web/dist/*.wasm',
+          dest: 'assets/wasm'
+        }
+      ]
+    })
   ],
   server: {
-    hmr: { overlay: false },
-    watch: { usePolling: true },
-    proxy: {
-      '/Xenova': {
-        target: 'https://huggingface.co',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/Xenova/, '')
-      }
-    }
+    hmr: { overlay: false }
   },
   build: {
-    outDir: 'dist',
-    assetsDir: 'assets',
-    sourcemap: 'hidden',
-    rollupOptions: {
-      plugins: [
-        wasm() 
-      ]
-    }
-  },
-  resolve: {
-    alias: { '@': '/src' }
+    target: 'esnext',
+    assetsInlineLimit: 0
   },
   worker: {
-    plugins: () => [comlink()] 
+    plugins: () => [comlink()],
+    format: 'es'
   },
   optimizeDeps: {
-    include: [
-      'onnxruntime-web/wasm', 
-      '@xenova/transformers'
-    ],
-    exclude: ['@xenova/transformers']
+    include: ['@xenova/transformers']
   }
 });
