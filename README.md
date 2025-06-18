@@ -1,6 +1,6 @@
 ## Todo
 
-1. Debug why modelLoader.ts runs for every turn that the player takes
+1. Debug why modelLoader.ts runs for every other turn that the player takes
 2. Move model initialisation within modelLoader.ts to run only once at the beginning of the client intialisation
 3. Debug this error that occurs from failing to get a response from models
 
