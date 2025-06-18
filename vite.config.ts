@@ -10,8 +10,9 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: 'node_modules/onnxruntime-web/dist/*.wasm',
-          dest: 'assets/wasm'
+          src: 'node_modules/onnxruntime-web/dist/ort-wasm*.wasm',
+          dest: 'assets/wasm',
+          rename: (name) => name.replace('ort-wasm', 'onnxruntime') 
         }
       ]
     })
@@ -28,6 +29,7 @@ export default defineConfig({
     format: 'es'
   },
   optimizeDeps: {
-    include: ['@xenova/transformers']
+    include: ['@xenova/transformers'],
+    exclude: ['onnxruntime-web'] 
   }
 });

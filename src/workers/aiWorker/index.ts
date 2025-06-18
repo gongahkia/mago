@@ -1,7 +1,7 @@
 import { expose } from 'comlink';
 import { loadLaMiniGPT } from './modelLoader';
 import { processDecision } from './decisionProcessor';
-import type { GameState, Entity } from '../../types/gameTypes';
+import type { GameState, Entity, Position, Tile } from '../../types/gameTypes';
 import { aStarPathfind } from '../../lib/utilities/pathfinding';
 
 let generator: any = null;
@@ -20,6 +20,12 @@ const worker = {
     try {
       await this.init();
       const context = this.createContextString(entity, gameState);
+      
+      // Add error boundary for generation
+      if (!generator?.generate) {
+        throw new Error('Generator not initialized');
+      }
+
       const response = await generator.generate(context, {
         max_length: 50,
         temperature: 0.7
@@ -38,12 +44,14 @@ const worker = {
       `Nearby tiles: ${this.getSurroundingTiles(entity.position, gameState.dungeonMap)}`;
   },
 
-   getSurroundingTiles(pos: Position, dungeonMap: Map<string, Tile>) {
+  getSurroundingTiles(pos: Position, dungeonMap: [string, Tile][]) { // Changed to array
     const tiles = [];
+    const map = new Map(dungeonMap); // Reconstruct Map in worker
+    
     for (let dx = -2; dx <= 2; dx++) {
       for (let dy = -2; dy <= 2; dy++) {
         const key = `${pos.x + dx},${pos.y + dy}`;
-        tiles.push(dungeonMap.get(key)?.type || 'wall');
+        tiles.push(map.get(key)?.type || 'wall');
       }
     }
     return tiles.join(',');

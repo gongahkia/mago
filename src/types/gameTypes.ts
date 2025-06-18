@@ -26,7 +26,7 @@ export interface GameState {
   player: Player;
   entities: Entity[];
   currentTurn: 'player' | 'ai';
-  dungeonMap: boolean[][];
+  dungeonMap: [string, Tile][]; 
 }
 
 export type GameAction = 
