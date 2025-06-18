@@ -40,11 +40,9 @@ export class DungeonGenerator {
   }
 
   private createRoom(map: boolean[][], x: number, y: number, w: number, h: number) {
-    for (let i = y; i < y + h; i++) {
-      for (let j = x; j < x + w; j++) {
-        if (isInBounds([j, i], this.width, this.height)) {
-          map[i][j] = true;
-        }
+    for (let i = Math.max(y, 0); i < Math.min(y + h, this.height); i++) {
+      for (let j = Math.max(x, 0); j < Math.min(x + w, this.width); j++) {
+        map[i][j] = true;
       }
     }
   }
