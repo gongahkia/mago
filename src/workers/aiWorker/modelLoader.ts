@@ -1,9 +1,17 @@
 import { pipeline, AutoTokenizer } from '@xenova/transformers';
 import { env } from '@xenova/transformers';
+import { initWasm } from 'onnxruntime-web/wasm'; 
 import * as Comlink from 'comlink';
 
 env.allowLocalModels = false;
 env.useBrowserCache = false;
+
+await initWasm({
+  wasmPaths: {
+    'ort-wasm.wasm': '/node_modules/onnxruntime-web/dist/ort-wasm.wasm',
+    'ort-wasm-simd.wasm': '/node_modules/onnxruntime-web/dist/ort-wasm-simd.wasm'
+  }
+});
 
 const MODEL_ID = 'Xenova/LaMini-GPT-774m';
 

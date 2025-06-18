@@ -32,13 +32,13 @@ const worker = {
     }
   },
 
-  private createContextString(entity: Entity, gameState: GameState): string {
+  createContextString(entity: Entity, gameState: GameState): string {
     return `Entity ${entity.id} at ${entity.position.x},${entity.position.y}. ` +
       `Player at ${gameState.player.position.x},${gameState.player.position.y}. ` +
       `Nearby tiles: ${this.getSurroundingTiles(entity.position, gameState.dungeonMap)}`;
   },
 
-  private getSurroundingTiles(pos: Position, dungeonMap: Map<string, Tile>) {
+   getSurroundingTiles(pos: Position, dungeonMap: Map<string, Tile>) {
     const tiles = [];
     for (let dx = -2; dx <= 2; dx++) {
       for (let dy = -2; dy <= 2; dy++) {
