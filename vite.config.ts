@@ -7,6 +7,13 @@ export default defineConfig({
     hmr: {
       overlay: false
     },
+    proxy: {
+      '/Xenova': {
+        target: 'https://huggingface.co',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/Xenova/, '')
+      }
+    },
     watch: {
       usePolling: true
     }
