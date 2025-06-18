@@ -1,43 +1,35 @@
 import { expose } from 'comlink';
-import { loadPhi3Mini } from './modelLoader';
+import { loadLaMiniGPT } from './modelLoader';
 import type { GameState, Entity } from '../../types/gameTypes';
 
 let generator: any = null;
+let tokenizer: any = null;
 
 const worker = {
-  async init(updateProgress?: (progress: number) => void) {
+  async init() {
     if (!generator) {
-      const result = await loadPhi3Mini(updateProgress);
+      const result = await loadLaMiniGPT();
       generator = result.generator;
+      tokenizer = result.tokenizer;
     }
   },
 
-  async decideActionForEntity(entity: Entity, gameState: GameState, updateProgress?: (progress: number) => void) {
-    await this.init(updateProgress);
+  async decideActionForEntity(entity: Entity, gameState: GameState) {
+    await this.init();
 
-    const messages = [
-      {
-        role: 'user',
-        content:
-          `Given roguelike game state:\n` +
-          `- Dungeon level: ${gameState.dungeonLevel}\n` +
-          `- Player position: ${JSON.stringify(gameState.player.position)}\n` +
-          `- NPC position: ${JSON.stringify(entity.position)}\n` +
-          `- NPC type: ${entity.aiType}\n` +
-          `- Visible enemies: ${gameState.entities.length}\n\n` +
-          `Respond ONLY with a valid JSON object matching this schema:\n` +
-          `{ "action": "move"|"attack"|"flee", "direction": {"x": -1|0|1, "y": -1|0|1}, "dialogue": "<optional flavor text>" }\n` +
-          `Do not include any explanation or extra text.`
-      }
-    ];
+    const prompt = `Given roguelike game state:
+- Dungeon level: ${gameState.dungeonLevel}
+- Player position: ${JSON.stringify(gameState.player.position)}
+- NPC position: ${JSON.stringify(entity.position)}
+- NPC type: ${entity.aiType}
+- Visible enemies: ${gameState.entities.length}
 
-    const output = await generator(messages, {
-      max_new_tokens: 50,
-      temperature: 0.3
-    });
+Respond ONLY with a valid JSON object matching this schema:
+{ "action": "move"|"attack"|"flee", "direction": {"x": -1|0|1, "y": -1|0|1}, "dialogue": "<optional flavor text>" }
+Do not include any explanation or extra text.`;
 
+    const output = await generator(prompt, { max_new_tokens: 50, temperature: 0.3 });
     const outputText = output[0]?.generated_text ?? '';
-    console.log(`AI output: ${outputText}`);
     const match = outputText.match(/\{[\s\S]*?\}/);
     if (!match) throw new Error("No JSON found in model output");
     const action = JSON.parse(match[0]);
