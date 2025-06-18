@@ -13,7 +13,7 @@ export async function loadLaMiniGPT() {
     return { generator, tokenizer };
   } catch (error) {
     console.error('[Error] Model loading failed:', error);
-    throw new Error(`AI model initialization failed: ${error.message}`);
+    throw new Error(`AI model initialization failed: ${error}`);
   }
 }
 
