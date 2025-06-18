@@ -3,7 +3,7 @@ import * as Comlink from 'comlink';
 
 env.allowLocalModels = false;
 env.useBrowserCache = false;
-env.backends.onnx.wasm.wasmPaths = '/node_modules/onnxruntime-web/dist/';
+env.backends.onnx.wasm.wasmPaths = '/assets/wasm/'; 
 
 const MODEL_ID = 'Xenova/LaMini-GPT-774m';
 
@@ -21,12 +21,12 @@ export async function loadLaMiniGPT() {
     
     return {
       generator: {
-        generate: Comlink.proxy(generator.generate),
-        dispose: Comlink.proxy(generator.dispose)
+        generate: Comlink.proxy(generator.generate?.bind(generator)),
+        dispose: Comlink.proxy(generator.dispose?.bind(generator))
       },
       tokenizer: {
-        encode: Comlink.proxy(tokenizer.encode),
-        decode: Comlink.proxy(tokenizer.decode)
+        encode: Comlink.proxy(tokenizer.encode?.bind(tokenizer)),
+        decode: Comlink.proxy(tokenizer.decode?.bind(tokenizer))
       }
     };
   } catch (error) {
