@@ -2,24 +2,26 @@ import { GameState, Entity } from '../../types/gameTypes';
 import { Direction } from '../../lib/utilities/geometry';
 import { aStarPathfind } from '../../lib/utilities/pathfinding';
 
-const BEHAVIOR_PROMPT = `Given roguelike game state:
+const BEHAVIOR_PROMPT = `<|user|>
+Given roguelike game state:
 - Dungeon level: {dungeonLevel}
 - Player position: {playerPos}
 - NPC position: {npcPos}
 - NPC type: {npcType}
 - Visible enemies: {visibleEnemies}
 
-Generate JSON action following this schema:
+Generate JSON action:
 { 
   "action": "move"|"attack"|"flee",
   "direction": {"x": -1|0|1, "y": -1|0|1},
   "dialogue": "<optional flavor text>"
-}`;
+}
+<|assistant|>`;
 
 export const processDecision = async (
   entity: Entity,
   gameState: GameState,
-  model: LlamaContext
+  model: any
 ) => {
   try {
     const prompt = BEHAVIOR_PROMPT
@@ -28,13 +30,16 @@ export const processDecision = async (
       .replace('{npcPos}', JSON.stringify(entity.position))
       .replace('{npcType}', entity.aiType)
       .replace('{visibleEnemies}', gameState.entities.length.toString());
-    const response = await model.completion(prompt);
-    const action = JSON.parse(response);
-    if (isValidAction(action)) {
-      return action as Direction;
-    }
+
+    const output = await model.generate(prompt, {
+      max_new_tokens: 50,
+      temperature: 0.3,
+    });
+    
+    const action = JSON.parse(output[0].generated_text);
+    return isValidAction(action) ? action.direction : aStarPathfind(entity.position, gameState.player.position);
   } catch (error) {
-    console.warn('AI model failed, falling back to A* pathfinding');
+    console.warn('AI failed, using pathfinding');
     return aStarPathfind(entity.position, gameState.player.position);
   }
 };
