@@ -1,3 +1,4 @@
+// src/hooks/useGameLoop.ts
 import { useEffect } from 'react';
 import { wrap } from 'comlink';
 import useGameStore from '../store/gameState';
@@ -6,7 +7,6 @@ const TURN_DELAY = 100;
 
 export const useGameLoop = () => {
   const currentTurn = useGameStore(state => state.currentTurn);
-  const entities = useGameStore(state => state.entities);
   const dispatch = useGameStore(state => state.dispatch);
 
   useEffect(() => {
@@ -14,31 +14,40 @@ export const useGameLoop = () => {
     let aiWorker: Worker | null = null;
 
     const processAITurn = async () => {
-      if (currentTurn !== 'ai') return;
-      
-      aiWorker = new Worker(new URL('../workers/aiWorker', import.meta.url), {
-        type: 'module'
-      });
-
       try {
+        const { entities, dungeonMap } = useGameStore.getState();
+        const aiEntities = entities.filter(e => e.aiType);
+        
+        if (aiEntities.length === 0) {
+          dispatch({ type: 'advanceTurn' });
+          return;
+        }
+
+        aiWorker = new Worker(new URL('../workers/aiWorker', import.meta.url), {
+          type: 'module'
+        });
         const workerApi = wrap<import('../workers/aiWorker').AIWorker>(aiWorker);
-        const currentState = useGameStore.getState();
         
-        await workerApi.init(); 
-        
+        await workerApi.init();
+
         await Promise.all(
-          entities
-            .filter(e => e.aiType)
-            .map(async (entity) => {
-              const action = await workerApi.decideActionForEntity(entity, currentState);
+          aiEntities.map(async (entity) => {
+            try {
+              const action = await workerApi.decideActionForEntity(entity, { 
+                ...useGameStore.getState(),
+                dungeonMap 
+              });
               dispatch({ type: 'moveEntity', entityId: entity.id, direction: action });
-            })
+            } catch (error) {
+              console.error(`AI decision failed for ${entity.id}:`, error);
+            }
+          })
         );
       } catch (error) {
-        console.error('AI processing error:', error);
+        console.error('AI turn processing failed:', error);
       } finally {
-        aiWorker?.terminate();
         dispatch({ type: 'advanceTurn' });
+        aiWorker?.terminate();
       }
     };
 
@@ -50,5 +59,5 @@ export const useGameLoop = () => {
       clearTimeout(timeout);
       aiWorker?.terminate();
     };
-  }, [currentTurn, entities, dispatch]);
+  }, [currentTurn, dispatch]); 
 };
