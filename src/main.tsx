@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
-import { AIWorkerProvider } from './AIWorkerContext';
+import GameStateProvider from './store/gameState';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <AIWorkerProvider>
-    <App />
-  </AIWorkerProvider>
+  <React.StrictMode>
+      <App />
+  </React.StrictMode>
 );
