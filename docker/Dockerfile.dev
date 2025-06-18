@@ -3,11 +3,23 @@ FROM node:20
 WORKDIR /app
 
 RUN apt-get update && \
-    apt-get install -y python3 make g++ && \
-    npm install -g @napi-rs/cli
+    apt-get install -y \
+    python3 \
+    make \
+    g++ \
+    gcc \
+    pkg-config \
+    libcairo2-dev \
+    libpango1.0-dev \
+    libjpeg-dev \
+    libgif-dev \
+    librsvg2-dev
+
+RUN npm install -g @napi-rs/cli node-gyp
 
 COPY package.json package-lock.json ./
-RUN npm ci
+
+RUN npm ci --build-from-source
 
 COPY . .
 
