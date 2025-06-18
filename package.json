@@ -22,11 +22,10 @@
   "dependencies": {
     "@types/node": "^24.0.3",
     "@vitejs/plugin-react": "^4.5.2",
+    "@xenova/transformers": "^2.6.0",
     "comlink": "^4.4.2",
-    "llama-node": "^0.1.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "zustand": "^5.0.5",
-    "@xenova/transformers": "^2.6.0"
+    "zustand": "^5.0.5"
   }
 }
