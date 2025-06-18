@@ -21,7 +21,12 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
-    sourcemap: 'hidden'
+    sourcemap: 'hidden',
+    rollupOptions: {
+      plugins: [
+        wasm() 
+      ]
+    }
   },
   resolve: {
     alias: { '@': '/src' }
@@ -30,6 +35,10 @@ export default defineConfig({
     plugins: () => [comlink()] 
   },
   optimizeDeps: {
+    include: [
+      'onnxruntime-web/wasm', 
+      '@xenova/transformers'
+    ],
     exclude: ['@xenova/transformers']
   }
 });
