@@ -32,4 +32,7 @@ export default defineConfig({
       '@': '/src'
     }
   },
+  worker: {
+    plugins: [comlink()]
+  }
 });
