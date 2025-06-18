@@ -19,7 +19,9 @@
     "@vitejs/plugin-react-swc": "^3.10.2",
     "typescript": "^5.8.3",
     "vite": "^6.3.5",
-    "vite-plugin-comlink": "^5.1.0"
+    "vite-plugin-comlink": "^5.1.0",
+    "vite-plugin-top-level-await": "^1.5.0",
+    "vite-plugin-wasm": "^3.4.1"
   },
   "dependencies": {
     "@types/node": "^24.0.3",

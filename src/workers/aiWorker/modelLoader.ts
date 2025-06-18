@@ -1,42 +1,34 @@
-import { pipeline, AutoTokenizer } from '@xenova/transformers';
-import { env } from '@xenova/transformers';
-import { initWasm } from 'onnxruntime-web/wasm'; 
+import { pipeline, AutoTokenizer, env } from '@xenova/transformers';
 import * as Comlink from 'comlink';
 
 env.allowLocalModels = false;
 env.useBrowserCache = false;
-
-await initWasm({
-  wasmPaths: {
-    'ort-wasm.wasm': '/node_modules/onnxruntime-web/dist/ort-wasm.wasm',
-    'ort-wasm-simd.wasm': '/node_modules/onnxruntime-web/dist/ort-wasm-simd.wasm'
-  }
-});
+env.backends.onnx.wasm.wasmPaths = '/node_modules/onnxruntime-web/dist/';
 
 const MODEL_ID = 'Xenova/LaMini-GPT-774m';
 
 export async function loadLaMiniGPT() {
   try {
     console.log('[Loading] LaMini-GPT model and tokenizer...');
+    
     const generator = await pipeline('text-generation', MODEL_ID, {
       quantized: true,
     });
-    
+
     const tokenizer = await AutoTokenizer.from_pretrained(MODEL_ID);
 
-    const proxiedGenerator = {
-      generate: Comlink.proxy(generator.generate),
-      dispose: Comlink.proxy(generator.dispose),
-      _call: Comlink.proxy(generator._call)
-    };
-
-    const proxiedTokenizer = {
-      encode: Comlink.proxy(tokenizer.encode),
-      decode: Comlink.proxy(tokenizer.decode)
-    };
-
     console.log('[Success] LaMini-GPT model and tokenizer loaded');
-    return { generator: proxiedGenerator, tokenizer: proxiedTokenizer };
+    
+    return {
+      generator: {
+        generate: Comlink.proxy(generator.generate),
+        dispose: Comlink.proxy(generator.dispose)
+      },
+      tokenizer: {
+        encode: Comlink.proxy(tokenizer.encode),
+        decode: Comlink.proxy(tokenizer.decode)
+      }
+    };
   } catch (error) {
     console.error('[Error] Model loading failed:', error);
     throw new Error(`AI model initialization failed: ${error}`);

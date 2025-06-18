@@ -1,22 +1,24 @@
 import { useEffect, useRef } from 'react';
-import { wrap } from 'comlink';
+import { wrap, transfer } from 'comlink';
 import useGameStore from '../store/gameState';
+import type { GameState, Entity } from '../types/gameTypes';
 
 const TURN_DELAY = 100;
-let aiWorker: Worker | null = null;
 
 export const useGameLoop = () => {
   const currentTurn = useGameStore(state => state.currentTurn);
   const dispatch = useGameStore(state => state.dispatch);
+  const workerRef = useRef<Worker | null>(null);
   const workerApi = useRef<ReturnType<typeof wrap<import('../workers/aiWorker').AIWorker>> | null>(null);
 
   useEffect(() => {
     const initializeWorker = async () => {
-      if (!aiWorker) {
-        aiWorker = new Worker(new URL('../workers/aiWorker', import.meta.url), {
-          type: 'module'
-        });
-        workerApi.current = wrap<import('../workers/aiWorker').AIWorker>(aiWorker);
+      if (!workerRef.current) {
+        workerRef.current = new Worker(
+          new URL('../workers/aiWorker', import.meta.url),
+          { type: 'module' }
+        );
+        workerApi.current = wrap<import('../workers/aiWorker').AIWorker>(workerRef.current);
         await workerApi.current.init();
       }
     };
@@ -24,8 +26,8 @@ export const useGameLoop = () => {
     initializeWorker();
 
     return () => {
-      aiWorker?.terminate();
-      aiWorker = null;
+      workerRef.current?.terminate();
+      workerRef.current = null;
       workerApi.current = null;
     };
   }, []);
@@ -46,18 +48,26 @@ export const useGameLoop = () => {
           return;
         }
 
+        // Convert Map to Array for transfer
+        const dungeonArray = Array.from(dungeonMap.entries());
+        
         await Promise.all(
           aiEntities.map(async (entity) => {
             try {
               const action = await workerApi.current!.decideActionForEntity(
-                entity, 
-                Comlink.proxy({
+                Comlink.proxy(entity),
+                transfer<GameState>({
                   entities,
-                  dungeonMap: Array.from(dungeonMap.entries()),
+                  dungeonMap: dungeonArray,
                   player
-                })
+                }, [dungeonArray.buffer]) // Transfer buffer efficiently
               );
-              dispatch({ type: 'moveEntity', entityId: entity.id, direction: action });
+              
+              dispatch({ 
+                type: 'moveEntity', 
+                entityId: entity.id, 
+                direction: action 
+              });
             } catch (error) {
               console.error(`AI decision failed for ${entity.id}:`, error);
             }
