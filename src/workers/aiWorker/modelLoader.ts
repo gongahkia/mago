@@ -11,6 +11,10 @@ export async function loadLaMiniGPT() {
   try {
     console.log('[Loading] LaMini-GPT model and tokenizer...');
     
+    if (!env.backends.onnx.wasm.init) {
+      throw new Error('ONNX WASM backend not initialized');
+    }
+
     const generator = await pipeline('text-generation', MODEL_ID, {
       quantized: true,
     });
@@ -21,12 +25,12 @@ export async function loadLaMiniGPT() {
     
     return {
       generator: {
-        generate: Comlink.proxy(generator.generate?.bind(generator)),
-        dispose: Comlink.proxy(generator.dispose?.bind(generator))
+        generate: Comlink.proxy(generator.generate.bind(generator)),
+        dispose: Comlink.proxy(generator.dispose.bind(generator))
       },
       tokenizer: {
-        encode: Comlink.proxy(tokenizer.encode?.bind(tokenizer)),
-        decode: Comlink.proxy(tokenizer.decode?.bind(tokenizer))
+        encode: Comlink.proxy(tokenizer.encode.bind(tokenizer)),
+        decode: Comlink.proxy(tokenizer.decode.bind(tokenizer))
       }
     };
   } catch (error) {

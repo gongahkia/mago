@@ -12,7 +12,7 @@ export default defineConfig({
         {
           src: 'node_modules/onnxruntime-web/dist/ort-wasm*.wasm',
           dest: 'assets/wasm',
-          rename: (name) => name.replace('ort-wasm', 'onnxruntime') 
+          rename: name => name.replace('ort-wasm', 'onnxruntime') + '.wasm' 
         }
       ]
     })
@@ -30,6 +30,6 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: ['@xenova/transformers'],
-    exclude: ['onnxruntime-web'] 
+    exclude: ['onnxruntime-web']
   }
 });
