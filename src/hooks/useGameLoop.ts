@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import useGameStore from '../store/gameState';
-import { GameState } from '../types/gameTypes';
 
 const TURN_DELAY = 100;
 
@@ -11,31 +10,40 @@ export const useGameLoop = () => {
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
+    let aiWorker: Worker | null = null;
 
     const processAITurn = async () => {
-      const aiWorker = new Worker(new URL('../workers/aiWorker', import.meta.url), {
+      if (currentTurn !== 'ai') return; 
+      
+      aiWorker = new Worker(new URL('../workers/aiWorker', import.meta.url), {
         type: 'module'
       });
 
-      const currentState = useGameStore.getState();
-      
-      for (const entity of entities.filter(e => e.aiType)) {
-        try {
-          const action = await aiWorker.decideActionForEntity(entity, currentState);
-          dispatch({ type: 'moveEntity', entityId: entity.id, direction: action });
-        } catch (error) {
-          console.error('AI decision failed:', error);
-        }
+      try {
+        const currentState = useGameStore.getState();
+        await Promise.all(
+          entities
+            .filter(e => e.aiType)
+            .map(async (entity) => {
+              const action = await aiWorker!.decideActionForEntity(entity, currentState);
+              dispatch({ type: 'moveEntity', entityId: entity.id, direction: action });
+            })
+        );
+      } catch (error) {
+        console.error('AI processing error:', error);
+      } finally {
+        dispatch({ type: 'advanceTurn' });
+        aiWorker?.terminate();
       }
-
-      dispatch({ type: 'advanceTurn' });
-      aiWorker.terminate();
     };
 
     if (currentTurn === 'ai') {
       timeout = setTimeout(processAITurn, TURN_DELAY);
     }
 
-    return () => clearTimeout(timeout);
+    return () => {
+      clearTimeout(timeout);
+      aiWorker?.terminate();
+    };
   }, [currentTurn, entities, dispatch]);
 };
