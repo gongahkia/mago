@@ -15,6 +15,7 @@ export const useGameLoop = () => {
 
     const processAITurn = async () => {
       try {
+        dispatch({ type: 'startAIThinking' });
         const { entities, dungeonMap } = useGameStore.getState();
         const aiEntities = entities.filter(e => e.aiType);
         
@@ -47,6 +48,7 @@ export const useGameLoop = () => {
         console.error('AI turn processing failed:', error);
       } finally {
         dispatch({ type: 'advanceTurn' });
+        dispatch({ type: 'stopAIThinking' });
         aiWorker?.terminate();
       }
     };

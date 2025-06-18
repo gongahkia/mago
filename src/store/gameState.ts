@@ -54,7 +54,7 @@ const moveEntity = (state: GameState, action: { entityId: string; direction: Dir
   const newY = target.position[1] + action.direction.y;
   
   if (!dungeonMap[newY]?.[newX]) {
-    return state; 
+    return state;
   }
 
   const newPos: [number, number] = [newX, newY];
@@ -79,6 +79,7 @@ const INITIAL_STATE = {
   player: INITIAL_PLAYER,
   entities: [],
   currentTurn: 'player' as const,
+  isAIThinking: false, 
 };
 
 const useGameStore = create<GameState & { 
@@ -93,6 +94,7 @@ const useGameStore = create<GameState & {
     entities: initialEntities,
     currentTurn: 'player',
     dungeonMap: initialMap,
+    isAIThinking: false, 
     
     dispatch: (action) => set((state) => {
       switch (action.type) {
@@ -107,6 +109,10 @@ const useGameStore = create<GameState & {
           };
         case 'advanceTurn':
           return { ...state, currentTurn: state.currentTurn === 'player' ? 'ai' : 'player' };
+        case 'startAIThinking':
+          return { ...state, isAIThinking: true };
+        case 'stopAIThinking':
+          return { ...state, isAIThinking: false };
         default:
           return state;
       }

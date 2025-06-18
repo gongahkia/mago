@@ -1,6 +1,7 @@
 import { useGameLoop } from './hooks/useGameLoop';
 import { useInputHandler } from './hooks/useInputHandler';
 import { GameCanvas } from './components/GameCanvas';
+import { AINotification } from './components/AINotification';
 
 const App = () => {
   useGameLoop();
@@ -14,6 +15,7 @@ const App = () => {
       backgroundColor: '#1a1a1a'
     }}>
       <GameCanvas />
+      <AINotification />
     </div>
   );
 };
