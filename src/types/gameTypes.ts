@@ -33,3 +33,11 @@ export type GameAction =
   | { type: 'moveEntity'; entityId: string; direction: Direction }
   | { type: 'resetGame' }
   | { type: 'advanceTurn' };
+
+export interface Tile {
+  type: string; 
+  walkable: boolean;
+  transparent: boolean;
+  explored?: boolean; 
+  variant?: number; 
+}
