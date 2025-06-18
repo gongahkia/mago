@@ -3,10 +3,11 @@ import useGameStore from '../store/gameState';
 
 export const AINotification = () => {
   const isAIThinking = useGameStore(state => state.isAIThinking);
+  const modelReady = useGameStore(state => state.modelReady);
   const progressRef = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
-    if (isAIThinking && progressRef.current) {
+    if ((isAIThinking || !modelReady) && progressRef.current) {
       progressRef.current.style.width = '0%';
       setTimeout(() => {
         if (progressRef.current) {
@@ -14,9 +15,27 @@ export const AINotification = () => {
         }
       }, 10);
     }
-  }, [isAIThinking]);
+  }, [isAIThinking, modelReady]);
 
-  if (!isAIThinking) return null;
+  if (modelReady && !isAIThinking) return null;
+
+  const message = !modelReady
+    ? `
+╔══════════════════════════╗
+║   LOADING AI MODEL...    ║
+║   Please wait to play    ║
+╚══════════════════════════╝
+`
+    : `
+╔══════════════════════════╗
+║     MAGO IS THINKING     ║
+║       Taking Turn        ║
+╚══════════════════════════╝
+`;
+
+  const barLabel = !modelReady
+    ? 'Loading model...'
+    : 'Calculating optimal strategy...';
 
   return (
     <div style={{
@@ -34,16 +53,9 @@ export const AINotification = () => {
       padding: '8px 12px'
     }}>
       <div style={{ whiteSpace: 'pre' }}>
-        {
-`
-╔══════════════════════════╗
-║     MAGO IS THINKING     ║
-║       Taking Turn        ║
-╚══════════════════════════╝
-`
- }
+        {message}
       </div>
-      
+
       <div style={{
         marginTop: '8px',
         fontSize: '12px',
@@ -58,7 +70,7 @@ export const AINotification = () => {
             position: 'relative',
             overflow: 'hidden'
           }}>
-            <div 
+            <div
               ref={progressRef}
               style={{
                 position: 'absolute',
@@ -66,12 +78,12 @@ export const AINotification = () => {
                 left: 0,
                 height: '100%',
                 backgroundColor: 'white',
-                transition: 'width 2s ease-out',
+                transition: modelReady ? 'width 2s ease-out' : 'width 4s ease-in',
                 width: '0%'
               }}
             />
-            <span style={{ 
-              position: 'relative', 
+            <span style={{
+              position: 'relative',
               zIndex: 1,
               color: 'transparent'
             }}>
@@ -81,7 +93,7 @@ export const AINotification = () => {
           {']'}
         </div>
         <div style={{ marginTop: '4px', fontSize: '10px' }}>
-          Calculating optimal strategy...
+          {barLabel}
         </div>
       </div>
     </div>
