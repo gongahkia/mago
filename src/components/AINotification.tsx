@@ -24,26 +24,30 @@ export const AINotification = () => {
       top: '20px',
       left: '50%',
       transform: 'translateX(-50%)',
-      color: '#00FF00',
+      color: 'white',
       fontFamily: 'monospace',
       fontSize: '14px',
       textAlign: 'center',
       zIndex: 1000,
       backgroundColor: '#000000',
-      border: '1px solid #00FF00',
+      border: '1px solid white',
       padding: '8px 12px'
     }}>
-      <div style={{ whiteSpace: 'pre-line' }}>
-        {`╔══════════════════════════╗
-║    DUNGEON AI ACTIVE     ║
+      <div style={{ whiteSpace: 'pre' }}>
+        {
+`
+╔══════════════════════════╗
+║      MAGO AI ACTIVE      ║
 ║     Processing Turn      ║
-╚══════════════════════════╝`}
+╚══════════════════════════╝
+`
+ }
       </div>
       
       <div style={{
         marginTop: '8px',
         fontSize: '12px',
-        color: '#00AA00'
+        color: 'white'
       }}>
         <div style={{ whiteSpace: 'pre' }}>
           {'['}
@@ -61,7 +65,7 @@ export const AINotification = () => {
                 top: 0,
                 left: 0,
                 height: '100%',
-                backgroundColor: '#00FF00',
+                backgroundColor: 'white',
                 transition: 'width 2s ease-out',
                 width: '0%'
               }}

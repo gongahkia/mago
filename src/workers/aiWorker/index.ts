@@ -4,6 +4,7 @@ import { processDecision } from './decisionProcessor';
 import type { GameState, Entity } from '../../types/gameTypes';
 
 let generator: any = null;
+let tokenizer: any = null;
 
 const worker = {
   async init() {
