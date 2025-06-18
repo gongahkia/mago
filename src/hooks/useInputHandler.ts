@@ -16,6 +16,7 @@ const KEYBINDINGS: { [key: string]: Direction } = {
 export const useInputHandler = () => {
   const currentTurn = useGameStore(state => state.currentTurn);
   const dispatch = useGameStore(state => state.dispatch);
+  const dungeonMap = useGameStore(state => state.dungeonMap);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -24,12 +25,17 @@ export const useInputHandler = () => {
       const direction = KEYBINDINGS[e.key];
       if (direction) {
         e.preventDefault();
-        dispatch({ type: 'moveEntity', entityId: 'player-01', direction });
-        dispatch({ type: 'advanceTurn' });
+        const playerPos = useGameStore.getState().player.position;
+        const newX = playerPos[0] + direction.x;
+        const newY = playerPos[1] + direction.y;
+        if (dungeonMap[newY]?.[newX]) {
+          dispatch({ type: 'moveEntity', entityId: 'player-01', direction });
+          dispatch({ type: 'advanceTurn' });
+        }
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentTurn, dispatch]);
+  }, [currentTurn, dispatch, dungeonMap]); 
 };
