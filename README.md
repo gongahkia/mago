@@ -32,8 +32,8 @@ The below instructions are for locally hosting `Mago`.
 
 ```console
 $ git clone https://github.com/gongahkia/mago && cd mago
-$ npm run dev
-$ docker-compose -f docker/docker-compose.yml up --build
+$ make
+$ make build
 ```
 
 ## Architecture
