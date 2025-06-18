@@ -52,8 +52,11 @@ export const processDecision = async (
       max_new_tokens: 50,
       temperature: 0.3,
     });
-    
-    const action = JSON.parse(output[0].generated_text);
+
+    const outputText = output[0].generated_text;
+    const match = outputText.match(/\{[\s\S]*?\}/);
+    if (!match) throw new Error("No JSON found in model output");
+    const action = JSON.parse(match[0]);
     return isValidAction(action) ? action.direction : aStarPathfind(entity.position, gameState.player.position);
   } catch (error) {
     console.warn('AI failed, using pathfinding');
