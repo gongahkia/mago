@@ -40,7 +40,8 @@ function isValidAction(action: any): boolean {
 export async function processDecision(
   entity: Entity,
   gameState: GameState,
-  generator: any
+  generator: any,
+  tokenizer: any
 ) {
   try {
     const prompt = BEHAVIOR_PROMPT
@@ -50,14 +51,18 @@ export async function processDecision(
       .replace('{npcType}', entity.aiType || 'unknown')
       .replace('{visibleEnemies}', String(gameState.entities.length));
 
+    console.log(`[AI] Generating action for ${entity.id}...`);
+    console.log(`[AI] Prompt: ${prompt}`);
     const output = await generator(prompt, {
       max_new_tokens: 50,
       temperature: 0.3,
+      repetition_penalty: 1.5,
+      pad_token_id: tokenizer.pad_token_id ?? tokenizer.sep_token_id ?? 0,
+      eos_token_id: tokenizer.sep_token_id ?? 2
     });
-
+    console.log('[AI] Model output:', output);
     const outputText = output[0]?.generated_text || '';
     const action = extractFirstJSON(outputText);
-
     if (isValidAction(action)) {
       return action.direction;
     }

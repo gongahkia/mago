@@ -10,6 +10,7 @@ const worker = {
     if (!generator) {
       const result = await loadLaMiniGPT();
       generator = result.generator;
+      tokenizer = result.tokenizer;
     }
   },
 
