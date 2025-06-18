@@ -1,6 +1,10 @@
 import { pipeline, AutoTokenizer } from '@xenova/transformers';
+import { env } from '@xenova/transformers';
 
-const MODEL_ID = 'Xenova/LaMini-GPT-774M';
+env.allowLocalModels = false;
+env.useBrowserCache = false; 
+
+const MODEL_ID = 'Xenova/LaMini-GPT-774m';
 
 export async function loadLaMiniGPT() {
   try {
