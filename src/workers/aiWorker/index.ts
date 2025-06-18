@@ -12,9 +12,9 @@ const worker = {
     }
   },
 
-  async decideActionForEntity(entity: Entity, gameState: GameState) {
+  async decideActionForEntity(entity: Entity, gameState: GameState) { // Renamed method
     await this.init();
-    return processDecision(entity, gameState, aiModel.context);
+    return processDecision(entity, gameState, (await loadPhi3Mini()).context);
   },
 
   async heartbeat() {
