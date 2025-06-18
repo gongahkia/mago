@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   mago:
     build:
@@ -10,5 +9,3 @@ services:
       - /app/node_modules
     ports:
       - "3000:3000"
-    environment:
-      - NODE_ENV=development
