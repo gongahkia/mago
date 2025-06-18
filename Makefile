@@ -1,9 +1,9 @@
 all:local
 
 build:
-	@echo "Building Docker Image..."
+	@clear && echo "Building Docker Image..."
 	@docker-compose -f docker/docker-compose.yml up --build
 
 local:
-	@echo "Running Local Build..."
+	@clear && echo "Running Local Build..."
 	@npm run dev
