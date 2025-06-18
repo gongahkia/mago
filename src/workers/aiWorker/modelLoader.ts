@@ -1,8 +1,9 @@
 import { pipeline, AutoTokenizer } from '@xenova/transformers';
 import { env } from '@xenova/transformers';
+import * as Comlink from 'comlink';
 
 env.allowLocalModels = false;
-env.useBrowserCache = false; 
+env.useBrowserCache = false;
 
 const MODEL_ID = 'Xenova/LaMini-GPT-774m';
 
@@ -12,9 +13,22 @@ export async function loadLaMiniGPT() {
     const generator = await pipeline('text-generation', MODEL_ID, {
       quantized: true,
     });
+    
     const tokenizer = await AutoTokenizer.from_pretrained(MODEL_ID);
+
+    const proxiedGenerator = {
+      generate: Comlink.proxy(generator.generate),
+      dispose: Comlink.proxy(generator.dispose),
+      _call: Comlink.proxy(generator._call)
+    };
+
+    const proxiedTokenizer = {
+      encode: Comlink.proxy(tokenizer.encode),
+      decode: Comlink.proxy(tokenizer.decode)
+    };
+
     console.log('[Success] LaMini-GPT model and tokenizer loaded');
-    return { generator, tokenizer };
+    return { generator: proxiedGenerator, tokenizer: proxiedTokenizer };
   } catch (error) {
     console.error('[Error] Model loading failed:', error);
     throw new Error(`AI model initialization failed: ${error}`);
