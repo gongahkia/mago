@@ -5,8 +5,6 @@ import GameStateProvider from './store/gameState';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <GameStateProvider>
       <App />
-    </GameStateProvider>
   </React.StrictMode>
 );

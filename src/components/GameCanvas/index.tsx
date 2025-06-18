@@ -5,7 +5,11 @@ import useGameStore from '../../store/gameState';
 
 export const GameCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const gameState = useGameStore();
+  const gameState = useGameStore(state => ({
+    dungeonMap: state.dungeonMap,
+    player: state.player,
+    entities: state.entities
+  }));
   
   useEffect(() => {
     const canvas = canvasRef.current!;
