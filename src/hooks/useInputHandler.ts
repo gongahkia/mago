@@ -14,7 +14,8 @@ const KEYBINDINGS: { [key: string]: Direction } = {
 };
 
 export const useInputHandler = () => {
-  const { currentTurn, dispatch } = useGameStore();
+  const currentTurn = useGameStore(state => state.currentTurn);
+  const dispatch = useGameStore(state => state.dispatch);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
