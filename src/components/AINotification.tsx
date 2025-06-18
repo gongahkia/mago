@@ -4,7 +4,7 @@ import useGameStore from '../store/gameState';
 export const AINotification = () => {
   const isAIThinking = useGameStore(state => state.isAIThinking);
   const progressRef = useRef<HTMLDivElement>(null);
-
+  
   useEffect(() => {
     if (isAIThinking && progressRef.current) {
       progressRef.current.style.width = '0%';
@@ -26,23 +26,59 @@ export const AINotification = () => {
       transform: 'translateX(-50%)',
       color: '#00FF00',
       fontFamily: 'monospace',
+      fontSize: '14px',
       textAlign: 'center',
-      zIndex: 1000
+      zIndex: 1000,
+      backgroundColor: '#000000',
+      border: '1px solid #00FF00',
+      padding: '8px 12px'
     }}>
-      <div>AI THINKING...</div>
+      <div style={{ whiteSpace: 'pre-line' }}>
+        {`╔══════════════════════════╗
+║    DUNGEON AI ACTIVE     ║
+║     Processing Turn      ║
+╚══════════════════════════╝`}
+      </div>
+      
       <div style={{
-        width: '200px',
-        height: '4px',
-        backgroundColor: '#1a1a1a',
         marginTop: '8px',
-        overflow: 'hidden'
+        fontSize: '12px',
+        color: '#00AA00'
       }}>
-        <div ref={progressRef} style={{
-          height: '100%',
-          backgroundColor: '#00FF00',
-          transition: 'width 100ms linear',
-          width: '0%'
-        }} />
+        <div style={{ whiteSpace: 'pre' }}>
+          {'['}
+          <span style={{
+            display: 'inline-block',
+            width: '16ch',
+            backgroundColor: '#001100',
+            position: 'relative',
+            overflow: 'hidden'
+          }}>
+            <div 
+              ref={progressRef}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                height: '100%',
+                backgroundColor: '#00FF00',
+                transition: 'width 2s ease-out',
+                width: '0%'
+              }}
+            />
+            <span style={{ 
+              position: 'relative', 
+              zIndex: 1,
+              color: 'transparent'
+            }}>
+              {'████████████████'}
+            </span>
+          </span>
+          {']'}
+        </div>
+        <div style={{ marginTop: '4px', fontSize: '10px' }}>
+          Calculating optimal strategy...
+        </div>
       </div>
     </div>
   );
