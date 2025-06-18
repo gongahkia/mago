@@ -1,12 +1,17 @@
-import { AutoModelForCausalLM } from '@xenova/transformers';
+import { pipeline } from '@xenova/transformers';
 
-export const loadPhi3Mini = async () => {
-  return AutoModelForCausalLM.from_pretrained('microsoft/phi-3-mini-4k-instruct', {
+export async function loadPhi3Mini(updateProgress?: (progress: number) => void) {
+  const modelName = 'Xenova/Phi-3-mini-4k-instruct';
+  const generator = await pipeline('text-generation', modelName, {
     quantized: true,
-    progress_callback: (progress) => {
-      if (typeof progress === 'number' && !isNaN(progress)) {
-        console.log(`Model load progress: ${(progress * 100).toFixed(1)}%`);
-      }
-    }
+    progress_callback: updateProgress
+      ? (progress) => {
+          if (typeof progress === 'number' && !isNaN(progress)) {
+            updateProgress(progress);
+            console.log(`Model load progress: ${(progress * 100).toFixed(1)}%`);
+          }
+        }
+      : undefined,
   });
-};
+  return { generator };
+}
