@@ -3,20 +3,37 @@ import { Direction } from '../../lib/utilities/geometry';
 import { aStarPathfind } from '../../lib/utilities/pathfinding';
 
 const BEHAVIOR_PROMPT = `<|user|>
-Given roguelike game state:
+Given this roguelike game state:
 - Dungeon level: {dungeonLevel}
 - Player position: {playerPos}
 - NPC position: {npcPos}
 - NPC type: {npcType}
 - Visible enemies: {visibleEnemies}
 
-Generate JSON action:
+Respond ONLY with a valid JSON object matching this schema:
 { 
   "action": "move"|"attack"|"flee",
   "direction": {"x": -1|0|1, "y": -1|0|1},
   "dialogue": "<optional flavor text>"
 }
+Do not include any explanation or extra text.
 <|assistant|>`;
+
+// const BEHAVIOR_PROMPT = `<|user|>
+// Given roguelike game state:
+// - Dungeon level: {dungeonLevel}
+// - Player position: {playerPos}
+// - NPC position: {npcPos}
+// - NPC type: {npcType}
+// - Visible enemies: {visibleEnemies}
+
+// Generate JSON action:
+// { 
+//   "action": "move"|"attack"|"flee",
+//   "direction": {"x": -1|0|1, "y": -1|0|1},
+//   "dialogue": "<optional flavor text>"
+// }
+// <|assistant|>`;
 
 export const processDecision = async (
   entity: Entity,
