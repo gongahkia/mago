@@ -39,9 +39,16 @@ export class DungeonGenerator {
     return map;
   }
 
+
+
   private createRoom(map: boolean[][], x: number, y: number, w: number, h: number) {
-    for (let i = Math.max(y, 0); i < Math.min(y + h, this.height); i++) {
-      for (let j = Math.max(x, 0); j < Math.min(x + w, this.width); j++) {
+    const startX = Math.max(x, 0);
+    const startY = Math.max(y, 0);
+    const endX = Math.min(x + w, this.width - 1);
+    const endY = Math.min(y + h, this.height - 1);
+
+    for (let i = startY; i <= endY; i++) {
+      for (let j = startX; j <= endX; j++) {
         map[i][j] = true;
       }
     }
