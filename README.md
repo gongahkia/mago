@@ -1,11 +1,5 @@
 ## Todo
 
-1. Debug docker issues and make sure shit actually runs locally, continue from [this chat](https://www.perplexity.ai/search/i-have-a-project-called-mago-w-Q6.r_XUqQ2qodKKWlqLTtA)
-2. Put sound effects at `./public/assets/sfx`
-3. Put spritesheets and environment pngs at `./public/assets/sprites`
-4. Put tilemaps at `./public/assets/tilesets`
-5. Add .ico file for icon within `index.html`
-
 [![](https://img.shields.io/badge/mago_1.0.0-passing-green)](https://github.com/gongahkia/mago/releases/tag/1.0.0) 
 
 # `Mago` 🪧
@@ -34,8 +28,8 @@ The below instructions are for locally hosting `Mago`.
 
 ```console
 $ git clone https://github.com/gongahkia/mago && cd mago
+$ npm run dev
 $ docker-compose -f docker-compose.yml up --build dev
-$ docker-compose -f docker-compose.yml up --build prod
 ```
 
 ## Architecture
