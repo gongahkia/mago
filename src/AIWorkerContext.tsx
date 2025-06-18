@@ -1,12 +1,25 @@
-import React, { createContext, useContext, useRef, useEffect, useMemo } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useRef,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 import { wrap } from 'comlink';
 import AIWorker from './workers/aiWorker/index.ts?worker';
 
-const AIWorkerContext = createContext(null);
+type AIWorkerContextType = {
+  worker: any;
+  modelReady: boolean;
+};
+
+const AIWorkerContext = createContext<AIWorkerContextType | null>(null);
 
 export const AIWorkerProvider = ({ children }) => {
-  const workerRef = useRef(null);
-  const workerProxyRef = useRef(null);
+  const workerRef = useRef<any>(null);
+  const workerProxyRef = useRef<any>(null);
+  const [modelReady, setModelReady] = useState(false);
 
   if (!workerRef.current) {
     workerRef.current = new AIWorker();
@@ -14,12 +27,22 @@ export const AIWorkerProvider = ({ children }) => {
   }
 
   useEffect(() => {
+    workerProxyRef.current.init().then(() => {
+      setModelReady(true);
+      console.log('[AIWorkerProvider] Model loaded');
+    });
     return () => {
       workerRef.current?.terminate();
     };
   }, []);
 
-  const value = useMemo(() => workerProxyRef.current, []);
+  const value = useMemo(
+    () => ({
+      worker: workerProxyRef.current,
+      modelReady
+    }),
+    [modelReady]
+  );
 
   return (
     <AIWorkerContext.Provider value={value}>
@@ -30,6 +53,6 @@ export const AIWorkerProvider = ({ children }) => {
 
 export const useAIWorker = () => {
   const ctx = useContext(AIWorkerContext);
-  if (!ctx) throw new Error("useAIWorker must be used within an AIWorkerProvider");
+  if (!ctx) throw new Error('useAIWorker must be used within an AIWorkerProvider');
   return ctx;
 };
