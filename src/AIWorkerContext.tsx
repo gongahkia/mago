@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useRef, useEffect } from 'react';
+import React, { createContext, useContext, useRef, useEffect, useMemo } from 'react';
 import { wrap } from 'comlink';
 import AIWorker from './workers/aiWorker/index.ts?worker';
 
@@ -19,11 +19,17 @@ export const AIWorkerProvider = ({ children }) => {
     };
   }, []);
 
+  const value = useMemo(() => workerProxyRef.current, []);
+
   return (
-    <AIWorkerContext.Provider value={workerProxyRef.current}>
+    <AIWorkerContext.Provider value={value}>
       {children}
     </AIWorkerContext.Provider>
   );
 };
 
-export const useAIWorker = () => useContext(AIWorkerContext);
+export const useAIWorker = () => {
+  const ctx = useContext(AIWorkerContext);
+  if (!ctx) throw new Error("useAIWorker must be used within an AIWorkerProvider");
+  return ctx;
+};
