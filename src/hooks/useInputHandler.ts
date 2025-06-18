@@ -1,4 +1,3 @@
-// src/hooks/useInputHandler.ts
 import { useEffect } from 'react';
 import useGameStore from '../store/gameState';
 import { Direction } from '../types/gameTypes';
@@ -17,25 +16,27 @@ const KEYBINDINGS: { [key: string]: Direction } = {
 export const useInputHandler = () => {
   const currentTurn = useGameStore(state => state.currentTurn);
   const dispatch = useGameStore(state => state.dispatch);
+  const modelReady = useGameStore(state => state.modelReady);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (!modelReady) return; 
       if (currentTurn !== 'player') return;
 
       const direction = KEYBINDINGS[e.key];
       if (!direction) return;
 
       e.preventDefault();
-      
+
       const { player, dungeonMap } = useGameStore.getState();
       const newX = player.position[0] + direction.x;
       const newY = player.position[1] + direction.y;
 
       if (dungeonMap[newY]?.[newX]) {
-        dispatch({ 
-          type: 'moveEntity', 
-          entityId: 'player-01', 
-          direction 
+        dispatch({
+          type: 'moveEntity',
+          entityId: 'player-01',
+          direction
         });
         dispatch({ type: 'advanceTurn' });
       }
@@ -43,5 +44,5 @@ export const useInputHandler = () => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentTurn, dispatch]); 
+  }, [currentTurn, dispatch, modelReady]);
 };
