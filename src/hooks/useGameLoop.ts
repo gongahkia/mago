@@ -1,19 +1,20 @@
-// src/hooks/useGameLoop.ts
 import { useEffect } from 'react';
-import { wrap } from 'comlink';
 import useGameStore from '../store/gameState';
+import { useAIWorker } from '../AIWorkerContext';
 
 const TURN_DELAY = 100;
 
 export const useGameLoop = () => {
   const currentTurn = useGameStore(state => state.currentTurn);
   const dispatch = useGameStore(state => state.dispatch);
+  const { worker: aiWorker } = useAIWorker();
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
-    let aiWorker: Worker | null = null;
 
     const processAITurn = async () => {
+      if (!aiWorker) return;
+      
       try {
         dispatch({ type: 'startAIThinking' });
         const { entities, dungeonMap } = useGameStore.getState();
@@ -24,17 +25,10 @@ export const useGameLoop = () => {
           return;
         }
 
-        aiWorker = new Worker(new URL('../workers/aiWorker', import.meta.url), {
-          type: 'module'
-        });
-        const workerApi = wrap<import('../workers/aiWorker').AIWorker>(aiWorker);
-        
-        await workerApi.init();
-
         await Promise.all(
           aiEntities.map(async (entity) => {
             try {
-              const action = await workerApi.decideActionForEntity(entity, { 
+              const action = await aiWorker.decideActionForEntity(entity, { 
                 ...useGameStore.getState(),
                 dungeonMap 
               });
@@ -49,7 +43,6 @@ export const useGameLoop = () => {
       } finally {
         dispatch({ type: 'advanceTurn' });
         dispatch({ type: 'stopAIThinking' });
-        aiWorker?.terminate();
       }
     };
 
@@ -59,7 +52,6 @@ export const useGameLoop = () => {
 
     return () => {
       clearTimeout(timeout);
-      aiWorker?.terminate();
     };
-  }, [currentTurn, dispatch]); 
+  }, [currentTurn, dispatch, aiWorker]); 
 };

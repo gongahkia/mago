@@ -15,6 +15,10 @@ export default defineConfig({
         target: 'https://huggingface.co',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/Xenova/, '')
+      },
+      '/proxy': {
+        target: 'http://localhost:8010',
+        changeOrigin: true
       }
     }
   },
