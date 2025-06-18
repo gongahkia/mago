@@ -1,37 +1,39 @@
 import { useEffect, useRef } from 'react';
 import { AsciiRenderer } from './AsciiRenderer';
-import { ColorSystem } from './ColorSystem';
 import useGameStore from '../../store/gameState';
 
 export const GameCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const gameState = useGameStore(state => ({
-    dungeonMap: state.dungeonMap,
-    player: state.player,
-    entities: state.entities
-  }));
+  const rendererRef = useRef<AsciiRenderer | null>(null);
   
+  const dungeonMap = useGameStore(state => state.dungeonMap);
+  const player = useGameStore(state => state.player);
+  const entities = useGameStore(state => state.entities);
+
   useEffect(() => {
     const canvas = canvasRef.current!;
-    const renderer = new AsciiRenderer(canvas);
-    const colorSystem = new ColorSystem(canvas.getContext('2d')!);
+    rendererRef.current = new AsciiRenderer(canvas);
     
-    const resize = () => {
+    const handleResize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
     
-    resize();
-    window.addEventListener('resize', resize);
+    handleResize();
+    window.addEventListener('resize', handleResize);
     
-    const frame = () => {
-      renderer.draw(gameState);
-      requestAnimationFrame(frame);
+    let animationFrameId: number;
+    const render = () => {
+      rendererRef.current?.draw({ dungeonMap, player, entities });
+      animationFrameId = requestAnimationFrame(render);
     };
+    render();
     
-    frame();
-    return () => window.removeEventListener('resize', resize);
-  }, [gameState]);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [dungeonMap, player, entities]); 
 
   return <canvas ref={canvasRef} style={{ imageRendering: 'pixelated' }} />;
 };

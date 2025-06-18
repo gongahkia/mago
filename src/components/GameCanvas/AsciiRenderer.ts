@@ -1,9 +1,11 @@
 import { GameState } from '../../types/gameTypes';
 
 const ASCII_CHARSET = ['#', '.', ' ', '%', '=', '?', '!', '^', '<', '>', '(', ')', '[', ']', '{', '}'];
+const RENDER_INTERVAL = 100; 
 
 export class AsciiRenderer {
   private ctx: CanvasRenderingContext2D;
+  private lastRenderTime = 0;
   
   constructor(private canvas: HTMLCanvasElement) {
     this.ctx = canvas.getContext('2d')!;
@@ -13,19 +15,27 @@ export class AsciiRenderer {
   }
 
   draw(state: GameState) {
+    const now = performance.now();
+    if (now - this.lastRenderTime < RENDER_INTERVAL) return;
+    this.lastRenderTime = now;
+
     const { dungeonMap, player, entities } = state;
     const viewport = this.calculateViewport(player.position);
     
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     
-    for (let y = 0; y < dungeonMap.length; y++) {
-      for (let x = 0; x < dungeonMap[y].length; x++) {
-        if (this.isVisibleInViewport([x, y], viewport)) {
-          this.drawTile([x, y], dungeonMap[y][x], viewport);
-        }
+    const startX = Math.max(viewport.x, 0);
+    const startY = Math.max(viewport.y, 0);
+    const endX = Math.min(viewport.x + viewport.width, dungeonMap[0].length);
+    const endY = Math.min(viewport.y + viewport.height, dungeonMap.length);
+
+    for (let y = startY; y < endY; y++) {
+      const row = dungeonMap[y] || [];
+      for (let x = startX; x < endX; x++) {
+        this.drawTile([x, y], row[x], viewport);
       }
     }
-    
+
     this.drawEntity(player, viewport);
     entities.forEach(e => this.drawEntity(e, viewport));
   }
@@ -33,6 +43,7 @@ export class AsciiRenderer {
   private drawTile(pos: [number, number], isWalkable: boolean, viewport: any) {
     const char = isWalkable ? ASCII_CHARSET[1] : ASCII_CHARSET[0];
     const [screenX, screenY] = this.worldToScreen(pos, viewport);
+    this.ctx.fillStyle = '#FFFFFF';
     this.ctx.fillText(char, screenX, screenY);
   }
 
