@@ -4,25 +4,19 @@ import { GameCanvas } from './components/GameCanvas';
 import { AINotification } from './components/AINotification';
 import useGameStore from './store/gameState';
 import { useEffect } from 'react';
-import { useAIWorker } from './AIWorkerContext'; 
+import { useAIWorker } from './AIWorkerContext';
 
 const App = () => {
   useGameLoop();
   useInputHandler();
-  const aiWorker = useAIWorker();
+  const { worker, modelReady } = useAIWorker();
 
   useEffect(() => {
-    const loadModel = async () => {
-      try {
-        await aiWorker.init();
-        useGameStore.getState().setModelReady(true);
-        console.log('[App] AI model loaded successfully');
-      } catch (error) {
-        console.error('[App] Failed to load AI model:', error);
-      }
-    };
-    loadModel();
-  }, [aiWorker]);
+    if (modelReady) {
+      useGameStore.getState().setModelReady(true);
+      console.log('[App] AI model ready');
+    }
+  }, [modelReady]);
 
   return (
     <div style={{
