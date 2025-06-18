@@ -2,9 +2,23 @@
 
 1. Debug why modelLoader.ts runs for every turn that the player takes
 2. Move model initialisation within modelLoader.ts to run only once at the beginning of the client intialisation
-3. Add a credits and about page
-4. Add explanation and controls 
-5. See if I can make it similar to https://github.com/munificent/hauberk
+3. Debug this error that occurs from failing to get a response from models
+
+```txt
+useGameLoop.ts:43 AI decision failed for npc-0: DataCloneError: Failed to execute 'postMessage' on 'Worker': (ready) => set({ modelReady: ready }) could not be cloned.
+    at useGameLoop.ts:37:46
+    at Array.map (<anonymous>)
+    at processAITurn (useGameLoop.ts:35:22)
+
+useGameLoop.ts:43 AI decision failed for npc-1: DataCloneError: Failed to execute 'postMessage' on 'Worker': (ready) => set({ modelReady: ready }) could not be cloned.
+    at useGameLoop.ts:37:46
+    at Array.map (<anonymous>)
+    at processAITurn (useGameLoop.ts:35:22)
+```
+
+4. Add a credits and about page
+5. Add explanation and controls 
+6. See if I can make it similar to https://github.com/munificent/hauberk
 
 [![](https://img.shields.io/badge/mago_1.0.0-passing-green)](https://github.com/gongahkia/mago/releases/tag/1.0.0) 
 
