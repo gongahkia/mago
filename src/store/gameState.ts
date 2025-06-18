@@ -2,11 +2,13 @@ import { create } from 'zustand';
 import { GameState, GameAction, Entity, Player, Direction } from '../types/gameTypes';
 import { DungeonGenerator } from '../lib/generators/DungeonGenerator';
 
+const INITIAL_PLAYER_POSITION: [number, number] = [1, 1];
+
 const INITIAL_PLAYER: Player = {
   id: 'player-01',
   char: '@',
   color: '#FFFFFF',
-  position: [0, 0],
+  position: INITIAL_PLAYER_POSITION,
   inventory: [],
   experience: 0,
 };

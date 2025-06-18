@@ -7,10 +7,10 @@ const KEYBINDINGS: { [key: string]: Direction } = {
   ArrowDown: { x: 0, y: 1 },
   ArrowLeft: { x: -1, y: 0 },
   ArrowRight: { x: 1, y: 0 },
-  k: { x: 0, y: -1 },
-  j: { x: 0, y: 1 },
-  h: { x: -1, y: 0 },
-  l: { x: 1, y: 0 },
+  w: { x: 0, y: -1 },
+  s: { x: 0, y: 1 },
+  a: { x: -1, y: 0 },
+  d: { x: 1, y: 0 },
 };
 
 export const useInputHandler = () => {
