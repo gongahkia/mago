@@ -6,9 +6,9 @@ import { aStarPathfind } from '../../lib/utilities/pathfinding';
 import * as ort from 'onnxruntime-web';
 
 ort.env.wasm.wasmPaths = {
-  'ort-wasm.wasm': '/wasm/ort-wasm.wasm',
-  'ort-wasm-simd.wasm': '/wasm/ort-wasm-simd.wasm',
-  'ort-wasm-threaded.wasm': '/wasm/ort-wasm-threaded.wasm'
+  'ort-wasm.wasm': '/wasm/wasm.wasm',
+  'ort-wasm-simd.wasm': '/wasm/wasm-simd.wasm',
+  'ort-wasm-threaded.wasm': '/wasm/wasm-threaded.wasm'
 };
 
 let generator: any = null;
