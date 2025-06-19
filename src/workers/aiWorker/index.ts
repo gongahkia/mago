@@ -3,6 +3,13 @@ import { loadLaMiniGPT } from './modelLoader';
 import { processDecision } from './decisionProcessor';
 import type { GameState, Entity, Position, Tile } from '../../types/gameTypes';
 import { aStarPathfind } from '../../lib/utilities/pathfinding';
+import * as ort from 'onnxruntime-web';
+
+ort.env.wasm.wasmPaths = {
+  'ort-wasm.wasm': '/wasm/ort-wasm.wasm',
+  'ort-wasm-simd.wasm': '/wasm/ort-wasm-simd.wasm',
+  'ort-wasm-threaded.wasm': '/wasm/ort-wasm-threaded.wasm'
+};
 
 let generator: any = null;
 let tokenizer: any = null;
