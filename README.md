@@ -19,6 +19,7 @@ useGameLoop.ts:43 AI decision failed for npc-1: DataCloneError: Failed to execut
 4. Add a credits and about page
 5. Add explanation and controls 
 6. See if I can make it similar to https://github.com/munificent/hauberk
+7. Consider starting again 1 more time, if the project really doesn't work either deprecate or work on a client-server model instead although ideally it doesn't use webllm and just uses xenova's huggingface models
 
 [![](https://img.shields.io/badge/mago_1.0.0-passing-green)](https://github.com/gongahkia/mago/releases/tag/1.0.0) 
 
