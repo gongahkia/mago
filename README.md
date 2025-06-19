@@ -16,10 +16,11 @@ useGameLoop.ts:43 AI decision failed for npc-1: DataCloneError: Failed to execut
     at processAITurn (useGameLoop.ts:35:22)
 ```
 
-4. Add a credits and about page
-5. Add explanation and controls 
-6. See if I can make it similar to https://github.com/munificent/hauberk
-7. Consider starting again 1 more time, if the project really doesn't work either deprecate or work on a client-server model instead although ideally it doesn't use webllm and just uses xenova's huggingface models
+4. Add a credits and about page onto the frontend web display directly
+5. Add explanation and controls onto the frontend web display directly
+6. See if I can make `Mago` similar to https://github.com/munificent/hauberk or https://store.steampowered.com/app/975370/Dwarf_Fortress/ in terms of user freedoms
+7. If can't, consider starting again 1 more time where i don't use webllm and i program the xenova huggingface model loading and response generation from SCRATCH to get that working first! Then implement the frontend layer and player decision and game loop around that. If this works then also try and deploy it.
+8. If that doesn't work, then archive that code AND migrate to a client-server model instead where AI decisions are sent to a LOCAL huggingface model as a Python server, and the Frontend just handles player input and rendering.
 
 [![](https://img.shields.io/badge/mago_1.0.0-passing-green)](https://github.com/gongahkia/mago/releases/tag/1.0.0) 
 
