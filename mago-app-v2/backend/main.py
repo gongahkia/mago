@@ -1,6 +1,3 @@
-"""
-FastAPI entry point with game endpoints
-"""
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from app.game.state_manager import game_state_manager
@@ -15,7 +12,6 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# CORS configuration
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -26,7 +22,6 @@ app.add_middleware(
 
 @app.on_event("startup")
 async def startup_event():
-    """Initialize game state on startup"""
     if not game_state_manager.load_state():
         game_state_manager.generate_new_dungeon()
         game_state_manager.add_message("New game started!")
@@ -34,7 +29,6 @@ async def startup_event():
 
 @app.post("/game/action")
 async def handle_player_action(action: dict):
-    """Process player actions (movement, attacks, etc.)"""
     try:
         result = event_handler.process_player_action(action)
         return result
@@ -43,7 +37,6 @@ async def handle_player_action(action: dict):
 
 @app.post("/game/process_enemies")
 async def process_enemy_turns():
-    """Process all enemy turns using LLM decisions"""
     try:
         result = await event_handler.process_enemy_turns()
         return result
@@ -52,12 +45,10 @@ async def process_enemy_turns():
 
 @app.get("/game/state")
 async def get_game_state():
-    """Retrieve current game state"""
     return game_state_manager.current_state
 
 @app.post("/entity/generate")
 async def generate_entity(entity_type: str, x: int, y: int):
-    """Generate new game entity using LLM"""
     try:
         enemy = await entity_generator.create_enemy(entity_type, (x, y))
         game_state_manager.add_enemy(enemy)
