@@ -36,9 +36,9 @@ The below instructions are for locally hosting `Mago`.
 1. Execute the following to build and start Mago in production or development *(with optional hot reloading)*.
 
 ```console
-$ git clone https://github.com/gongahkia/mago && cd mago
-$ make
-$ make build
+$ git clone https://github.com/gongahkia/mago
+$ cd mago/mago-app-v1 && make build
+$ cd mago/mago-app-v2 && docker-compose up --build
 ```
 
 ## Architecture
@@ -46,7 +46,47 @@ $ make build
 ### `Mago` V1.0.0
 
 ```mermaid
+sequenceDiagram
+    Actor User as User
+    participant UI as React + TypeScript (Frontend)
+    participant Worker as Web Worker (Backend Logic)
+    participant LLM as WebLLM / Phi-3 / LaMini-GPT (Model)
+    participant Graphics as WebGL2 + Canvas API
+    participant Server as Node.js (API)
+    participant Docker as Docker Container
+    participant Nginx as Nginx (Routing)
 
+    %% User actions
+    User->>UI: Load game in browser
+    UI->>Nginx: Request static assets / API
+    Nginx->>Docker: Route request to correct container
+    Docker->>Server: Forward API/game logic requests
+    Server->>UI: Serve game bundle and API endpoints
+
+    %% Game initialization
+    UI->>Worker: Initialize game logic (via Web Worker)
+    UI->>Graphics: Initialize rendering context
+
+    %% Gameplay loop
+    User->>UI: Send input (move/act)
+    UI->>Worker: Pass user action
+    Worker->>LLM: Query for randomization/LLM-driven events
+    LLM-->>Worker: Return event/outcome
+    Worker->>UI: Update game state
+    UI->>Graphics: Render updated state
+
+    %% Optional: Save/Load
+    User->>UI: Save/Load game
+    UI->>Server: Persist/load game state (if supported)
+
+    %% Testing
+    UI->>Vitest: Run frontend tests (during development)
+
+    %% End of loop
+    Note over UI,User: Loop continues for each action
+
+    %% Diagram legend
+    Note right of LLM: LLMs can be WebLLM, Phi-3, or LaMini-GPT as configured
 ```
 
 ### `Mago` V2.0.0
