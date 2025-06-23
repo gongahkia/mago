@@ -13,7 +13,6 @@ class GameStateManager:
         self.current_state: Dict[str, Any] = self._initialize_default_state()
         
     def _initialize_default_state(self) -> Dict[str, Any]:
-        """Create a new game state with default values"""
         return {
             "dungeon": [],
             "player": {
@@ -30,7 +29,6 @@ class GameStateManager:
         }
     
     def generate_new_dungeon(self, width: int = 50, height: int = 50) -> None:
-        """Generate a simple dungeon layout"""
         dungeon = []
         for y in range(height):
             row = []
@@ -44,12 +42,10 @@ class GameStateManager:
         self.current_state["dungeon"] = dungeon
     
     def save_state(self) -> None:
-        """Persist game state to disk"""
         with open(self.save_file, 'w') as f:
             json.dump(self.current_state, f, indent=2)
     
     def load_state(self) -> bool:
-        """Load game state from disk"""
         if not os.path.exists(self.save_file):
             return False
             
@@ -61,7 +57,6 @@ class GameStateManager:
             return False
     
     def update_entity_position(self, entity_id: str, new_position: Tuple[int, int]) -> None:
-        """Update position of player or enemy"""
         if entity_id == "player":
             self.current_state["player"]["position"] = new_position
         else:
@@ -71,27 +66,20 @@ class GameStateManager:
                     break
     
     def add_enemy(self, enemy_data: Dict[str, Any]) -> None:
-        """Add a new enemy to the game state"""
         self.current_state["enemies"].append(enemy_data)
     
     def add_message(self, message: str) -> None:
-        """Add message to game log"""
         self.current_state["message_log"].append(message)
-        # Keep only last 10 messages
         if len(self.current_state["message_log"]) > 10:
             self.current_state["message_log"] = self.current_state["message_log"][-10:]
     
     def get_player_position(self) -> Tuple[int, int]:
-        """Get current player position"""
         return tuple(self.current_state["player"]["position"])
     
     def get_enemy_positions(self) -> List[Tuple[int, int]]:
-        """Get positions of all enemies"""
         return [tuple(enemy["position"]) for enemy in self.current_state["enemies"]]
     
     def get_dungeon(self) -> List[List[str]]:
-        """Get current dungeon layout"""
         return self.current_state["dungeon"]
 
-# Singleton instance for global access
 game_state_manager = GameStateManager()
