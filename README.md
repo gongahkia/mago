@@ -19,15 +19,12 @@ Browser [Rougelike](https://en.wikipedia.org/wiki/Roguelike) with [LLM](#stack)-
 
 [`Mago` V2.0.0](#mago-v200)
 
-* *Frontend*: 
-* *Backend*: 
-* *Graphics*: 
+* *Frontend*: [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML), [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS), [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+* *Backend*: [FastAPI](https://fastapi.tiangolo.com/), [Python](https://www.python.org/)
+* *Graphics*: [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)
 * *Package*: [Docker](https://www.docker.com/)
-* *Model*: 
-
-## Screenshots
-
-...
+* *Routing*: [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API), [WEb Workers API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API)
+* *Model*: [Ollama](https://ollama.com/), [Ollama/llama3:8b-instruct-q2_K](https://ollama.com/library/llama3:8b-instruct-q2_K)
 
 ## Usage
 
@@ -94,6 +91,10 @@ sequenceDiagram
 ```mermaid
 
 ```
+
+## Screenshots
+
+![](./asset/reference/1.png)
 
 ## Reference
 
