@@ -1,34 +1,13 @@
-## Todo
-
-1. Debug why modelLoader.ts runs for every other turn that the player takes
-2. Move model initialisation within modelLoader.ts to run only once at the beginning of the client intialisation
-3. Debug this error that occurs from failing to get a response from models
-
-```txt
-useGameLoop.ts:43 AI decision failed for npc-0: DataCloneError: Failed to execute 'postMessage' on 'Worker': (ready) => set({ modelReady: ready }) could not be cloned.
-    at useGameLoop.ts:37:46
-    at Array.map (<anonymous>)
-    at processAITurn (useGameLoop.ts:35:22)
-
-useGameLoop.ts:43 AI decision failed for npc-1: DataCloneError: Failed to execute 'postMessage' on 'Worker': (ready) => set({ modelReady: ready }) could not be cloned.
-    at useGameLoop.ts:37:46
-    at Array.map (<anonymous>)
-    at processAITurn (useGameLoop.ts:35:22)
-```
-
-4. Add a credits and about page onto the frontend web display directly
-5. Add explanation and controls onto the frontend web display directly
-6. See if I can make `Mago` similar to https://github.com/munificent/hauberk or https://store.steampowered.com/app/975370/Dwarf_Fortress/ in terms of user freedoms
-7. If can't, consider starting again 1 more time where i don't use webllm and i program the xenova huggingface model loading and response generation from SCRATCH to get that working first! Then implement the frontend layer and player decision and game loop around that. If this works then also try and deploy it.
-8. If that doesn't work, then archive that code AND migrate to a client-server model instead where AI decisions are sent to a LOCAL huggingface model as a Python server, and the Frontend just handles player input and rendering.
-
-[![](https://img.shields.io/badge/mago_1.0.0-passing-green)](https://github.com/gongahkia/mago/releases/tag/1.0.0) 
+[![](https://img.shields.io/badge/mago_1.0.0-passing-dark_green)](https://github.com/gongahkia/mago/releases/tag/1.0.0) 
+[![](https://img.shields.io/badge/mago_2.0.0-passing-green)](https://github.com/gongahkia/mago/releases/tag/2.0.0) 
 
 # `Mago` 🪧
 
 Browser [Rougelike](https://en.wikipedia.org/wiki/Roguelike) with [LLM](#stack)-orchestrated randomisation.
 
 ## Stack
+
+[`Mago` V1.0.0](#mago-v100)
 
 * *Frontend*: [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), [Vite](https://vite.dev/)
 * *Backend*: [Node.js](https://nodejs.org/en), [Web Workers API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
@@ -37,6 +16,14 @@ Browser [Rougelike](https://en.wikipedia.org/wiki/Roguelike) with [LLM](#stack)-
 * *Routing*: [Nginx](https://nginx.org/)
 * *Model*: [WebLLM](https://webllm.mlc.ai/), [microsoft/Phi-3-mini-4k-instruct](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct), [Xenova/Phi-3-mini-4k-instruct](https://huggingface.co/Xenova/Phi-3-mini-4k-instruct), [Xenova/LaMini-GPT-774M](https://huggingface.co/Xenova/LaMini-GPT-774M)
 * *Testing*: [Vitest](https://vitest.dev/)
+
+[`Mago` V2.0.0](#mago-v200)
+
+* *Frontend*: 
+* *Backend*: 
+* *Graphics*: 
+* *Package*: [Docker](https://www.docker.com/)
+* *Model*: 
 
 ## Screenshots
 
@@ -56,11 +43,17 @@ $ make build
 
 ## Architecture
 
-...
+### `Mago` V1.0.0
 
-## Other notes
+```mermaid
 
-...
+```
+
+### `Mago` V2.0.0
+
+```mermaid
+
+```
 
 ## Reference
 
