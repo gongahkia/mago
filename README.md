@@ -89,7 +89,61 @@ sequenceDiagram
 ### `Mago` V2.0.0
 
 ```mermaid
+sequenceDiagram
+    Actor U as User
+    participant F as Frontend (Browser)
+    participant B as Backend (FastAPI)
+    participant O as Ollama (LLM)
+    participant GS as Game State
 
+    U->>F: Loads game (localhost:3000)
+    F->>B: GET /game/state
+    activate B
+    B->>GS: Load persisted state
+    GS-->>B: Game state data
+    B-->>F: JSON state (dungeon, entities)
+    deactivate B
+
+    loop Game Loop
+        U->>F: Keyboard input (movement/action)
+        F->>B: POST /game/action {action, direction}
+        activate B
+        B->>GS: Validate & update player position
+        B->>B: Process collisions/combat
+        B-->>F: Action result
+        deactivate B
+
+        F->>B: POST /game/process_enemies
+        activate B
+        loop For each enemy
+            B->>O: Generate decision (enemy context)
+            activate O
+            O-->>B: JSON decision {action, dx, dy}
+            deactivate O
+            B->>GS: Update enemy position/state
+        end
+        B->>GS: Save game state
+        B-->>F: Updated game state
+        deactivate B
+
+        F->>F: Render frame
+        F->>Canvas: Draw ASCII tiles/entities
+    end
+
+    alt Special Events
+        B->>O: Generate entity (enemy/item)
+        activate O
+        O-->>B: JSON entity properties
+        deactivate O
+        B->>GS: Add new entity
+        B->>B: Trigger event (earthquake/hoard)
+        B->>O: Generate event outcome
+        O-->>B: Event description/effects
+    end
+
+    note over B,O: AI Integration Points
+    note over F: Canvas Rendering Pipeline
+    note over GS: JSON Persistence
 ```
 
 ## Screenshots
