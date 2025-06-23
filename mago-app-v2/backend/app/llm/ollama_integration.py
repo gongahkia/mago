@@ -5,6 +5,7 @@ import aiohttp
 import json
 import logging
 from .prompt_engine import get_decision_prompt, get_entity_prompt
+from typing import Dict, Any, List, Tuple
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

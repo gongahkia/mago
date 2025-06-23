@@ -2,6 +2,7 @@
 Creates structured prompts for LLM interactions
 """
 import json
+from typing import Dict, Any, List, Tuple
 
 def get_decision_prompt(context: Dict[str, Any]) -> str:
     """Generate prompt for enemy decision-making"""

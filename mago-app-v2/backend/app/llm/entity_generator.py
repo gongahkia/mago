@@ -4,6 +4,7 @@ Generates game entities using LLM with validation
 from .ollama_integration import generate_entity
 import random
 import string
+from typing import Dict, Any, List, Tuple
 
 class EntityGenerator:
     def __init__(self):
