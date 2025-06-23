@@ -1,7 +1,3 @@
-/**
- * Handles communication with Python/LLM backend
- * Manages API requests with error handling and timeouts
- */
 const API_BASE_URL = 'http://localhost:8000';
 
 export const fetchLLMDecision = async (context) => {
@@ -13,7 +9,7 @@ export const fetchLLMDecision = async (context) => {
                 context_type: 'enemy_decision',
                 game_state: context
             }),
-            signal: AbortSignal.timeout(2000) // Timeout after 2 seconds
+            signal: AbortSignal.timeout(2000) 
         });
 
         if (!response.ok) {
@@ -24,7 +20,6 @@ export const fetchLLMDecision = async (context) => {
         return data.decision;
     } catch (error) {
         console.error('LLM request failed:', error);
-        // Fallback to random movement
         return {
             action: 'move',
             dx: Math.floor(Math.random() * 3) - 1,
