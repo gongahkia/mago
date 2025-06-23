@@ -4,6 +4,7 @@ Handles game event processing and turn management
 from .state_manager import game_state_manager
 from app.llm import ollama_integration
 import random
+from typing import Dict, Any, List, Tuple
 
 class EventHandler:
     def __init__(self):
