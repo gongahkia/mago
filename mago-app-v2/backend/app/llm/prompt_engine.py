@@ -1,11 +1,7 @@
-"""
-Creates structured prompts for LLM interactions
-"""
 import json
 from typing import Dict, Any, List, Tuple
 
 def get_decision_prompt(context: Dict[str, Any]) -> str:
-    """Generate prompt for enemy decision-making"""
     return f"""
 You are a {context['enemy_type']} in a roguelike dungeon. Your goal is to act according to your monster type.
 
@@ -41,7 +37,6 @@ Decision (JSON ONLY):
 """.strip()
 
 def get_entity_prompt(entity_type: str, context: Dict[str, Any] = None) -> str:
-    """Generate prompt for entity creation"""
     return f"""
 Create a new {entity_type} for a roguelike game. Follow these guidelines:
 
@@ -84,7 +79,6 @@ Create a new {entity_type}:
 """.strip()
 
 def _get_dungeon_snippet(dungeon: List[List[str]], center: Tuple[int, int], radius: int) -> str:
-    """Get a small area of the dungeon for context"""
     cx, cy = center
     snippet = []
     for y in range(cy-radius, cy+radius+1):

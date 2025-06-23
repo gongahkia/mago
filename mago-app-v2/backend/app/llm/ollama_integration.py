@@ -1,20 +1,15 @@
-"""
-Handles communication with local Ollama server for LLM interactions
-"""
 import aiohttp
 import json
 import logging
 from .prompt_engine import get_decision_prompt, get_entity_prompt
 from typing import Dict, Any, List, Tuple
 
-# Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 OLLAMA_BASE_URL = "http://localhost:11434/api/generate"
 
 async def get_ollama_response(prompt: str, model: str = "llama3") -> str:
-    """Get response from Ollama API with error handling"""
     payload = {
         "model": model,
         "prompt": prompt,
@@ -35,7 +30,6 @@ async def get_ollama_response(prompt: str, model: str = "llama3") -> str:
         return ""
 
 async def get_decision(context: Dict[str, Any]) -> Dict[str, Any]:
-    """Get enemy decision from LLM with fallback to random"""
     prompt = get_decision_prompt(context)
     response = await get_ollama_response(prompt)
     
@@ -50,13 +44,11 @@ async def get_decision(context: Dict[str, Any]) -> Dict[str, Any]:
         }
 
 async def generate_entity(entity_type: str, context: Dict[str, Any] = None) -> Dict[str, Any]:
-    """Generate new entity using LLM"""
     prompt = get_entity_prompt(entity_type, context)
     response = await get_ollama_response(prompt)
     
     try:
         entity = json.loads(response)
-        # Add required fields if missing
         entity.setdefault("symbol", "?")
         entity.setdefault("color", "#FF00FF")
         return entity
