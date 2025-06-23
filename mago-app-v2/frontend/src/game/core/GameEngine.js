@@ -25,13 +25,12 @@ export default class GameEngine {
     }
 
     generateDungeon(width, height) {
-        // Generate simple dungeon layout
         const map = [];
         for (let y = 0; y < height; y++) {
             const row = [];
             for (let x = 0; x < width; x++) {
                 if (x === 0 || y === 0 || x === width-1 || y === height-1) {
-                    row.push('#'); // Walls
+                    row.push('#'); 
                 } else {
                     row.push(Math.random() > 0.7 ? '#' : '.');
                 }
@@ -42,7 +41,6 @@ export default class GameEngine {
     }
 
     async gameLoop() {
-        // Handle player input
         if (this.gameState.turn === 'player') {
             const action = this.inputHandler.getAction();
             if (action) {
@@ -50,15 +48,11 @@ export default class GameEngine {
                 this.gameState.turn = 'enemies';
             }
         } 
-        // Process enemy turns
         else if (this.gameState.turn === 'enemies') {
             await this.processEnemyTurns();
             this.gameState.turn = 'player';
         }
-
-        // Render game state
         this.renderer.render(this.gameState, this.player, this.enemies);
-        
         requestAnimationFrame(() => this.gameLoop());
     }
 

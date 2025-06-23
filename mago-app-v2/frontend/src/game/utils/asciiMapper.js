@@ -1,7 +1,3 @@
-/**
- * Maps entity types to ASCII symbols and colors
- * Ensures consistent representation across the game
- */
 const asciiMap = {
     entities: {
         player: { symbol: '@', color: '#FF5555' },
@@ -24,11 +20,8 @@ const asciiMap = {
 export default {
     getEntitySymbol: (type) => asciiMap.entities[type]?.symbol || '?',
     getEntityColor: (type) => asciiMap.entities[type]?.color || '#FF00FF',
-    
     getTileSymbol: (type) => asciiMap.tiles[type]?.symbol || ' ',
     getTileColor: (type) => asciiMap.tiles[type]?.color || '#000000',
-    
-    // For rendering special items
     getItemSymbol: (type) => asciiMap.items[type]?.symbol || '*',
     getItemColor: (type) => asciiMap.items[type]?.color || '#FFFF00'
 };

@@ -23,7 +23,7 @@ export default class InputHandler {
 
     getAction() {
         const action = this.currentAction;
-        this.currentAction = null; // Reset after consumption
+        this.currentAction = null; 
         return action;
     }
 }

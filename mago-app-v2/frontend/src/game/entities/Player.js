@@ -12,8 +12,6 @@ export default class Player {
         if (action.type === 'move') {
             const newX = this.x + action.dx;
             const newY = this.y + action.dy;
-            
-            // Check collision
             if (gameState.map[newY][newX] !== '#') {
                 this.x = newX;
                 this.y = newY;
@@ -22,7 +20,6 @@ export default class Player {
                 gameState.message = 'You bump into a wall';
             }
         }
-        // Other actions (attack, use item) would be handled here
     }
 
     getDirectionName(action) {

@@ -38,7 +38,6 @@ export default class Renderer {
     }
 
     renderEntities(player, enemies) {
-        // Render enemies
         enemies.forEach(enemy => {
             this.ctx.fillStyle = enemy.color;
             this.ctx.font = `${this.tileSize}px monospace`;
@@ -48,8 +47,6 @@ export default class Renderer {
                 (enemy.y + 1) * this.tileSize
             );
         });
-
-        // Render player
         this.ctx.fillStyle = this.colors.player;
         this.ctx.font = `${this.tileSize}px monospace`;
         this.ctx.fillText(
