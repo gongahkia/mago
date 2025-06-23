@@ -55,37 +55,23 @@ sequenceDiagram
     participant Server as Node.js (API)
     participant Docker as Docker Container
     participant Nginx as Nginx (Routing)
-
-    %% User actions
     User->>UI: Load game in browser
     UI->>Nginx: Request static assets / API
     Nginx->>Docker: Route request to correct container
     Docker->>Server: Forward API/game logic requests
     Server->>UI: Serve game bundle and API endpoints
-
-    %% Game initialization
     UI->>Worker: Initialize game logic (via Web Worker)
     UI->>Graphics: Initialize rendering context
-
-    %% Gameplay loop
     User->>UI: Send input (move/act)
     UI->>Worker: Pass user action
     Worker->>LLM: Query for randomization/LLM-driven events
     LLM-->>Worker: Return event/outcome
     Worker->>UI: Update game state
     UI->>Graphics: Render updated state
-
-    %% Optional: Save/Load
     User->>UI: Save/Load game
     UI->>Server: Persist/load game state (if supported)
-
-    %% Testing
     UI->>Vitest: Run frontend tests (during development)
-
-    %% End of loop
     Note over UI,User: Loop continues for each action
-
-    %% Diagram legend
     Note right of LLM: LLMs can be WebLLM, Phi-3, or LaMini-GPT as configured
 ```
 
