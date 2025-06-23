@@ -5,6 +5,8 @@
 
 Browser [Rougelike](https://en.wikipedia.org/wiki/Roguelike) with [LLM](#stack)-orchestrated randomisation.
 
+Made to practise [the stack(s)](#stack) *(and specifically migrating between [Client-sided WebLLM](#mago-v100) and a [traditional Full Stack architecture](#mago-v200))*.
+
 ## Stack
 
 [`Mago` V1.0.0](#mago-v100)
