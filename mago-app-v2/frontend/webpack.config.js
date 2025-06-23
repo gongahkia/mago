@@ -1,7 +1,3 @@
-/**
- * Webpack configuration for development and production
- * Bundles JavaScript modules for browser execution
- */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
