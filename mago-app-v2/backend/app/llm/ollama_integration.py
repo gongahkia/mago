@@ -1,13 +1,16 @@
 import aiohttp
 import json
 import logging
+import os
+import random
 from .prompt_engine import get_decision_prompt, get_entity_prompt
 from typing import Dict, Any, List, Tuple
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-OLLAMA_BASE_URL = "http://localhost:11434/api/generate"
+OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
+OLLAMA_BASE_URL = f"{OLLAMA_HOST}/api/generate"
 
 async def get_ollama_response(prompt: str, model: str = "llama3") -> str:
     payload = {
