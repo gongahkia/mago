@@ -47,6 +47,26 @@ async def process_enemy_turns():
 async def get_game_state():
     return game_state_manager.current_state
 
+@app.post("/game/decision")
+async def get_llm_decision(request: dict):
+    try:
+        from app.llm.ollama_integration import get_decision
+        context = request.get("game_state", {})
+        decision = await get_decision(context)
+        return {"decision": decision}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/llm/generate")
+async def generate_llm_entity(request: dict):
+    try:
+        from app.llm.ollama_integration import generate_entity
+        entity_type = request.get("entity_type", "goblin")
+        entity = await generate_entity(entity_type)
+        return entity
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @app.post("/entity/generate")
 async def generate_entity(entity_type: str, x: int, y: int):
     try:
