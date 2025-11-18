@@ -1,11 +1,12 @@
 [![](https://img.shields.io/badge/mago_1.0.0-passing-dark_green)](https://github.com/gongahkia/mago/releases/tag/1.0.0) 
 [![](https://img.shields.io/badge/mago_2.0.0-passing-green)](https://github.com/gongahkia/mago/releases/tag/2.0.0) 
+[![](https://img.shields.io/badge/mago_3.0.0-passing-green)](https://github.com/gongahkia/mago/releases/tag/3.0.0) 
 
 # `Mago` 🪧
 
 Browser [Rougelike](https://en.wikipedia.org/wiki/Roguelike) with [LLM](#stack)-orchestrated randomisation.
 
-Made to practise [the stack(s)](#stack) *(and specifically migrating between [Client-sided WebLLM](#mago-v100) and a [traditional Full Stack architecture](#mago-v200))*.
+Made to practise [the stack(s)](#stack).
 
 ## Stack
 
@@ -27,6 +28,10 @@ Made to practise [the stack(s)](#stack) *(and specifically migrating between [Cl
 * *Package*: [Docker](https://www.docker.com/)
 * *Routing*: [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API), [WEb Workers API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API)
 * *Model*: [Ollama](https://ollama.com/), [Ollama/llama3:8b-instruct-q2_K](https://ollama.com/library/llama3:8b-instruct-q2_K)
+ . 
+[`Mago` V3.0.0](#mago-v300)
+
+* ...
 
 ## Usage
 
@@ -146,6 +151,12 @@ sequenceDiagram
     note over B,O: AI Integration Points
     note over F: Canvas Rendering Pipeline
     note over GS: JSON Persistence
+```
+
+### `Mago` V3.0.0
+
+```mermaid
+...
 ```
 
 ## Screenshots
