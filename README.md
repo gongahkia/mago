@@ -28,10 +28,18 @@ Made to practise [the stack(s)](#stack).
 * *Package*: [Docker](https://www.docker.com/)
 * *Routing*: [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API), [WEb Workers API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API)
 * *Model*: [Ollama](https://ollama.com/), [Ollama/llama3:8b-instruct-q2_K](https://ollama.com/library/llama3:8b-instruct-q2_K)
- . 
+  
 [`Mago` V3.0.0](#mago-v300)
 
-* ...
+* *Frontend*: [Next.js](https://nextjs.org/) (React 19), [TypeScript](https://www.typescriptlang.org/), [Zustand](https://zustand-demo.pmnd.rs/) + Immer, [Tailwind CSS](https://tailwindcss.com/)
+* *Backend*: [FastAPI](https://fastapi.tiangolo.com/) (async), [Python](https://www.python.org/), [Celery](https://docs.celeryq.dev/) *(optional background tasks)*
+* *Graphics*: [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) (ASCII renderer + particle system)
+* *Package*: [Docker](https://www.docker.com/), [Docker Compose](https://docs.docker.com/compose/)
+* *Routing*: [WebSocket](https://fastapi.tiangolo.com/advanced/websockets/) (real‑time), [REST](https://fastapi.tiangolo.com/) (supporting endpoints), [Nginx](https://nginx.org/) *(production reverse proxy)*
+* *Model*: Hybrid – Client-side [Transformers.js](https://github.com/xenova/transformers.js) (WebLLM) + Server-side [Ollama](https://ollama.com/) ([llama3.2:3b-instruct-q4_K_M]) with intelligent routing & Redis caching
+* *Persistence*: [PostgreSQL](https://www.postgresql.org/) (game/session data), [Redis](https://redis.io/) (LLM decision + session cache)
+* *Auth*: JWT (access/refresh)
+* *Testing*: [Pytest](https://docs.pytest.org/), [Jest](https://jestjs.io/) / [Testing Library](https://testing-library.com/)
 
 ## Usage
 
@@ -43,6 +51,7 @@ The below instructions are for locally hosting `Mago`.
 $ git clone https://github.com/gongahkia/mago
 $ cd mago/mago-app-v1 && make build
 $ cd mago/mago-app-v2 && docker-compose up --build
+$ cd mago/mago-app-v3 && chmod+x run-dev.sh && ./run-dev.sh
 ```
 
 ## Architecture
@@ -156,12 +165,66 @@ sequenceDiagram
 ### `Mago` V3.0.0
 
 ```mermaid
-...
+sequenceDiagram
+    Actor P as Player
+    participant UI as Next.js + TS (Frontend)
+    participant WS as WebSocket Gateway
+    participant BE as FastAPI (Backend)
+    participant LLocal as WebLLM (Client Model)
+    participant LRemote as Ollama (Server Model)
+    participant Cache as Redis (Decision Cache)
+    participant DB as PostgreSQL (State)
+
+    %% Initial load
+    P->>UI: Open game
+    UI->>WS: Establish WebSocket (JWT token)
+    UI->>BE: (Fallback) Fetch bootstrap state (REST)
+    BE->>DB: Load player + dungeon
+    DB-->>BE: State snapshot
+    BE-->>UI: Initial state
+
+    loop Gameplay Loop
+        P->>UI: Input (move / attack / use)
+        UI->>WS: ACTION { type, payload }
+        WS->>BE: Forward authenticated action
+        BE->>DB: Validate & mutate game state
+        alt Enemy / AI Turn Needed
+            BE->>Cache: Lookup AI context hash
+            Cache-->>BE: (hit) Cached decision
+            BE-->>WS: STATE_UPDATE (delta)
+        else Cache miss
+            BE->>BE: Classify decision complexity
+            alt Simple Decision
+                BE-->>UI: REQUEST_CLIENT_DECISION (context)
+                UI->>LLocal: Generate quick action
+                LLocal-->>UI: Decision JSON
+                UI->>WS: CLIENT_DECISION relay
+                WS->>BE: Apply decision
+            else Complex Decision
+                BE->>LRemote: Prompt (context)
+                LRemote-->>BE: Decision JSON
+            end
+            BE->>Cache: Store decision (TTL)
+            BE->>DB: Update enemy state
+            BE-->>WS: STATE_UPDATE (delta)
+        end
+        WS-->>UI: Broadcast updated state
+        UI->>UI: Render (Canvas + Particles)
+    end
+
+    alt Periodic / Explicit Save
+        BE->>DB: Persist snapshot
+        BE-->>WS: EVENT save_complete
+    end
+
+    note over LLocal,LRemote: Hybrid LLM routing (latency vs reasoning)
+    note over Cache: 70%+ decision reuse
+    note over UI,WS: Client prediction + reconciliation
 ```
 
 ## Screenshots
 
-![](./asset/reference/1.png)
+...
 
 ## Reference
 
