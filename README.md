@@ -36,10 +36,10 @@ Made to practise [the stack(s)](#stack).
 * *Graphics*: [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) 
 * *Package*: [Docker](https://www.docker.com/), [Docker Compose](https://docs.docker.com/compose/)
 * *Routing*: [WebSocket](https://fastapi.tiangolo.com/advanced/websockets/), [REST](https://fastapi.tiangolo.com/), [Nginx](https://nginx.org/) 
-* *Model*: Client-side [Transformers.js](https://github.com/xenova/transformers.js) + Server-side [Ollama](https://ollama.com/) 
+* *Model*: [Transformers.js](https://github.com/xenova/transformers.js), [Ollama](https://ollama.com/) 
 * *Persistence*: [PostgreSQL](https://www.postgresql.org/), [Redis](https://redis.io/) 
 * *Auth*: [JWT](https://www.jwt.io/)
-* *Testing*: [Pytest](https://docs.pytest.org/), [Jest](https://jestjs.io/) / [Testing Library](https://testing-library.com/)
+* *Testing*: [Pytest](https://docs.pytest.org/), [Jest](https://jestjs.io/) 
 
 ## Usage
 
@@ -221,10 +221,6 @@ sequenceDiagram
     note over Cache: 70%+ decision reuse
     note over UI,WS: Client prediction + reconciliation
 ```
-
-## Screenshots
-
-...
 
 ## Reference
 
