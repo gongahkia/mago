@@ -1,0 +1,50 @@
+# FastAPI Core
+fastapi[all]==0.118.2
+uvicorn[standard]==0.31.1
+python-multipart==0.0.12
+
+# Database
+sqlalchemy==2.0.36
+asyncpg==0.30.0
+alembic==1.14.0
+
+# Redis Cache
+redis==5.2.1
+hiredis==3.0.0
+
+# Authentication
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-dotenv==1.0.1
+
+# HTTP Client
+aiohttp==3.11.11
+httpx==0.28.1
+
+# Data Validation
+pydantic==2.10.5
+pydantic-settings==2.7.1
+
+# WebSocket
+websockets==14.1
+
+# Task Queue (optional)
+celery[redis]==5.4.0
+
+# LLM Integration
+ollama==0.4.6
+
+# Utilities
+python-dateutil==2.9.0
+numpy==2.2.1
+
+# Testing
+pytest==8.3.4
+pytest-asyncio==0.25.2
+pytest-cov==6.0.0
+httpx==0.28.1  # for TestClient
+
+# Development
+black==24.10.0
+ruff==0.8.5
+mypy==1.14.1
