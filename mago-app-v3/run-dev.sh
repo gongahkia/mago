@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Mago V3 Quick Start Script
-# Run this to get Mago V3 up and running quickly
-
 set -e
 
 echo "🪧 Mago V3 Quick Start"
