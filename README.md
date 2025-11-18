@@ -1,6 +1,6 @@
-[![](https://img.shields.io/badge/mago_1.0.0-passing-dark_green)](https://github.com/gongahkia/mago/releases/tag/1.0.0) 
-[![](https://img.shields.io/badge/mago_2.0.0-passing-green)](https://github.com/gongahkia/mago/releases/tag/2.0.0) 
-[![](https://img.shields.io/badge/mago_3.0.0-passing-green)](https://github.com/gongahkia/mago/releases/tag/3.0.0) 
+[![](https://img.shields.io/badge/mago_1.0.0-passing-%23006400)](https://github.com/gongahkia/mago/releases/tag/1.0.0) 
+[![](https://img.shields.io/badge/mago_2.0.0-passing-%23228B22)](https://github.com/gongahkia/mago/releases/tag/2.0.0) 
+[![](https://img.shields.io/badge/mago_3.0.0-passing-%2390EE90)](https://github.com/gongahkia/mago/releases/tag/3.0.0) 
 
 # `Mago` 🪧
 
