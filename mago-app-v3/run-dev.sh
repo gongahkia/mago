@@ -75,7 +75,13 @@ sleep 30
 
 # Pull LLM model
 echo "📥 Pulling LLM model (this may take a few minutes)..."
-docker exec mago-ollama ollama pull llama3.2:3b-instruct-q4_K_M || echo "⚠️  Model pull failed, continuing anyway..."
+echo "💡 If model pull fails due to registry.ollama.ai issues, you can:"
+echo "   - Wait a few minutes and try again later"
+echo "   - Or continue and pull the model manually: docker exec mago-ollama ollama pull llama3.2:3b-instruct-q4_K_M"
+if ! docker exec mago-ollama ollama pull llama3.2:3b-instruct-q4_K_M 2>&1; then
+    echo "⚠️  Model pull failed (likely temporary Ollama registry issue)"
+    echo "⏭️  Continuing with setup - you can pull the model later when registry is back"
+fi
 
 echo ""
 echo "✅ Infrastructure ready!"
