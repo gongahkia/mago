@@ -45,15 +45,15 @@ services:
     environment:
       - OLLAMA_KEEP_ALIVE=24h
       - OLLAMA_HOST=0.0.0.0:11434
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
-    # Remove GPU requirements if not available
-    # comment out the deploy section above
+    # GPU reservation removed for macOS/CPU-only environments.
+    # If running on a Linux host with NVIDIA GPU support, re-add:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
 
   # FastAPI Backend
   backend:

@@ -68,6 +68,7 @@ fi
 # Start infrastructure
 echo "🚀 Starting infrastructure (PostgreSQL, Redis, Ollama)..."
 docker-compose up -d postgres redis ollama
+echo "💻 Ollama starting in CPU-only mode (no NVIDIA GPU)."
 
 echo "⏳ Waiting for services to be ready (30 seconds)..."
 sleep 30
