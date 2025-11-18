@@ -31,14 +31,14 @@ Made to practise [the stack(s)](#stack).
   
 [`Mago` V3.0.0](#mago-v300)
 
-* *Frontend*: [Next.js](https://nextjs.org/) (React 19), [TypeScript](https://www.typescriptlang.org/), [Zustand](https://zustand-demo.pmnd.rs/) + Immer, [Tailwind CSS](https://tailwindcss.com/)
-* *Backend*: [FastAPI](https://fastapi.tiangolo.com/) (async), [Python](https://www.python.org/), [Celery](https://docs.celeryq.dev/) *(optional background tasks)*
-* *Graphics*: [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) (ASCII renderer + particle system)
+* *Frontend*: [Next.js](https://nextjs.org/), [TypeScript](https://www.typescriptlang.org/), [Zustand](https://zustand-demo.pmnd.rs/), [Tailwind CSS](https://tailwindcss.com/)
+* *Backend*: [FastAPI](https://fastapi.tiangolo.com/), [Python](https://www.python.org/), [Celery](https://docs.celeryq.dev/) 
+* *Graphics*: [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) 
 * *Package*: [Docker](https://www.docker.com/), [Docker Compose](https://docs.docker.com/compose/)
-* *Routing*: [WebSocket](https://fastapi.tiangolo.com/advanced/websockets/) (real‑time), [REST](https://fastapi.tiangolo.com/) (supporting endpoints), [Nginx](https://nginx.org/) *(production reverse proxy)*
-* *Model*: Hybrid – Client-side [Transformers.js](https://github.com/xenova/transformers.js) (WebLLM) + Server-side [Ollama](https://ollama.com/) ([llama3.2:3b-instruct-q4_K_M]) with intelligent routing & Redis caching
-* *Persistence*: [PostgreSQL](https://www.postgresql.org/) (game/session data), [Redis](https://redis.io/) (LLM decision + session cache)
-* *Auth*: JWT (access/refresh)
+* *Routing*: [WebSocket](https://fastapi.tiangolo.com/advanced/websockets/), [REST](https://fastapi.tiangolo.com/), [Nginx](https://nginx.org/) 
+* *Model*: Client-side [Transformers.js](https://github.com/xenova/transformers.js) + Server-side [Ollama](https://ollama.com/) 
+* *Persistence*: [PostgreSQL](https://www.postgresql.org/), [Redis](https://redis.io/) 
+* *Auth*: [JWT](https://www.jwt.io/)
 * *Testing*: [Pytest](https://docs.pytest.org/), [Jest](https://jestjs.io/) / [Testing Library](https://testing-library.com/)
 
 ## Usage

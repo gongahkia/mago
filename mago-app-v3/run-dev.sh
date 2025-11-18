@@ -2,6 +2,23 @@
 
 set -e
 
+# Usage: ./run-dev.sh [--auto-colima]
+# --auto-colima : If Docker daemon unreachable and Colima installed, attempt to start Colima automatically.
+
+AUTO_COLIMA=false
+for arg in "$@"; do
+    case "$arg" in
+        --auto-colima)
+            AUTO_COLIMA=true
+            ;;
+        --help|-h)
+            echo "Mago V3 dev bootstrap"
+            echo "Usage: ./run-dev.sh [--auto-colima]"
+            exit 0
+            ;;
+    esac
+done
+
 echo "🪧 Mago V3 Quick Start"
 echo "===================="
 echo ""
@@ -21,6 +38,32 @@ fi
 
 echo "✅ Docker and Docker Compose found"
 echo ""
+
+# Ensure Docker daemon reachable (docker CLI may exist without running engine)
+if ! docker info >/dev/null 2>&1; then
+    echo "❌ Docker daemon is not running (cannot talk to docker.sock)."
+    if [ "$(uname)" = "Darwin" ]; then
+        echo "💡 On macOS: start Docker Desktop: open -a Docker"
+    fi
+    if command -v colima >/dev/null 2>&1; then
+        if [ "$AUTO_COLIMA" = true ]; then
+            echo "🔄 Attempting to start Colima..."
+            colima start || echo "⚠️ Colima failed to start."
+            if ! docker info >/dev/null 2>&1; then
+                echo "❌ Still cannot reach Docker daemon after Colima start attempt. Exiting."
+                exit 1
+            else
+                echo "✅ Docker daemon available via Colima"
+            fi
+        else
+            echo "💡 Colima detected. You can try: colima start"
+        fi
+    fi
+    if ! docker info >/dev/null 2>&1; then
+        echo "🔧 Resolve by starting Docker Desktop or running 'colima start', then re-run this script."
+        exit 1
+    fi
+fi
 
 # Start infrastructure
 echo "🚀 Starting infrastructure (PostgreSQL, Redis, Ollama)..."
